@@ -1,0 +1,55 @@
+Member type
+completed: value_type
+completed: reference
+completed: const_reference
+completed: iterator
+completed: const_iterator
+completed: size_type
+
+todo: ListIterator
+todo: iterator
+todo: const iterator
+
+Functions
+completed: list();
+completed: list(size_type n);
+completed: list(std::initializer_list<value_type> const &items);
+completed: list(const list&l);
+completed: list(list &&l);
+completed: operator=(list &&l);
+completed: ~list()
+
+Element access
+todo: const_reference front();
+todo: const_reference back();
+
+Iterators
+todo: iterator begin
+todo: iterator end
+
+Capacity
+completed: empty
+completed: size
+todo: max size
+
+Modifiers
+completed: clear
+todo: iterator insert(iterator pos, const_reference value)
+todo: void erase(iterator pos)
+todo: push_back
+todo: pop_back
+todo: push_front
+todo: pop_front
+todo: swap
+todo: merge
+todo: splice need to reconstruct to const_
+todo: reverse
+todo: unique
+todo: sort
+
+Iterators Overloading
+todo: *iterator
+todo: ++iterator
+todo: --iterator
+todo: iterator==
+todo: iterator!=

@@ -1,8 +1,8 @@
 # Prerequisites
 *.d
 *.DS_Store
-src/cat/*.txt
-src/grep/*.txt
+*.vscode
+
 
 # Object files
 *.o

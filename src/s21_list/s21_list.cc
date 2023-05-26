@@ -3,34 +3,35 @@
 int main() {
   // std::cout << "Hola" << std::endl;
   // s21::list<int> a({7, 2, 1});
-  s21::list<int> a({1, 2, 3, 4, 5, 3});
+  s21::list<int> a({1, 2, 3, 0, 5, 3});
   // s21::list<int> a(4);
   // auto itr = a.begin();
-  auto itr = a.end();
-  // ++itr;
-  // --itr;
-  std::cout << *itr << std::endl;
+  // auto itr = a.begin();
+  // // ++itr;
+  // // --itr;
+  // std::cout << *itr << std::endl;
 
-  // auto itr2 = a.end();
-  // std::cout << *itr2 << std::endl;
-
-  //   for (auto itr = a.begin(); itr != a.end(); ++itr) {
-  //   std::cout << *itr << std::endl;
-  // }
+  auto itr2 = a.end();
+  // --itr2;
+  // ++itr2;
+  std::cout << *itr2 << std::endl;
+  for (auto itr = a.begin(); itr != a.end(); ++itr) {
+    std::cout << *itr << std::endl;
+  }
   return 0;
 }
 
 // Constructors
 template <class T>
 s21::list<T>::list() {
-  // *head_ = new node_;
-  // *tail_ = new node_;
-  // *end_node_ = new node_;
+  //   *head_ = new node_;
+  //   *tail_ = new node_;
+  //   *end_node_ = new node_;
 
-  // tail_->next_ = end_node_;
-  // end_node_->next_ = head_;
-  // end_node_->previous_ = tail_;
-  // head_->previous_ = end_node_;
+  //   tail_->next_ = end_node_;
+  //   end_node_->next_ = head_;
+  //   end_node_->previous_ = tail_;
+  //   head_->previous_ = end_node_;
 }
 
 template <class T>
@@ -44,11 +45,6 @@ s21::list<T>::list(std::initializer_list<value_type> const &items) {
   for (auto itr = items.begin(); itr != items.end(); ++itr) {
     push_back(*itr);
   }
-  // auto *end_node_ = new node_;
-  // tail_->next_ = end_node_;
-  // end_node_->next_ = head_;
-  // end_node_->previous_ = tail_;
-  // head_->previous_ = end_node_;
 }
 
 template <class T>
@@ -77,11 +73,15 @@ s21::list<T> s21::list<T>::operator=(list &&l) {
 }
 
 // Element access
-// template <class T>
-// s21::list<T>::const_reference s21::list<T>::front() {}
+template <class T>
+typename s21::list<T>::const_reference s21::list<T>::front() {
+  return head_->value_;
+}
 
-// template <class T>
-// s21::list<T>::const_reference s21::list<T>::back() {}
+template <class T>
+typename s21::list<T>::const_reference s21::list<T>::back() {
+  return tail_->value_;
+}
 
 // Iterators
 template <class T>
@@ -96,7 +96,7 @@ typename s21::list<T>::iterator s21::list<T>::begin() {
 template <class T>
 typename s21::list<T>::iterator s21::list<T>::end() {
   s21::list<T>::iterator iterator;
-  if (head_) {
+  if (end_node_ && head_ && tail_) {
     iterator = *end_node_;
   }
   return iterator;
@@ -117,8 +117,10 @@ typename s21::list<T>::size_type s21::list<T>::size() {
   return size_;
 }
 
-// template <class T>
-// s21::list<T>::size_type s21::list<T>::max_size() {}
+template <class T>
+typename s21::list<T>::size_type s21::list<T>::max_size() {
+  return std::numeric_limits<size_type>::max();
+}
 
 // Modifiers
 template <class T>
@@ -130,20 +132,13 @@ void s21::list<T>::clear() {
   }
   // delete end_node_;
 }
+
 // template <class T>
 // void s21::list<T>::erase(iterator pos) {}
 
 template <class T>
 void s21::list<T>::push_back(const_reference value) {
-  // *head_ = new node_;
-  // *tail_ = new node_;
-
-  // tail_->next_ = end_node_;
-  // end_node_->next_ = head_;
-  // end_node_->previous_ = tail_;
-  // head_->previous_ = end_node_;
   auto *new_node = new node_;
-  new_node->next_ = end_node_;
   new_node->value_ = value;
   if (!head_) {
     head_ = new_node;
@@ -230,13 +225,13 @@ void s21::list<T>::ListIterator::operator--(int) {
 
 template <class T>
 bool s21::list<T>::ListIterator::operator==(
-    s21::list<T>::ListIterator iterator) const {
+    const s21::list<T>::ListIterator iterator) const {
   return itr_node_ == iterator.itr_node_;
 }
 
 template <class T>
 bool s21::list<T>::ListIterator::operator!=(
-    s21::list<T>::ListIterator iterator) const {
+    const s21::list<T>::ListIterator iterator) const {
   return itr_node_ != iterator.itr_node_;
 }
 

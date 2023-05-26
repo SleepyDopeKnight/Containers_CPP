@@ -20,22 +20,22 @@ completed: operator=(list &&l);
 completed: ~list()
 
 Element access
-todo: const_reference front();
-todo: const_reference back();
+completed: const_reference front();
+completed: const_reference back();
 
 Iterators
 completed: iterator begin
 completed: iterator end
+todo: iterator insert(iterator pos, const_reference value)
 
 Capacity
 completed: empty
 completed: size
-todo: max size
+completed: max size
 
 Modifiers
 completed: clear
-todo: iterator insert(iterator pos, const_reference value)
-todo: void erase(iterator pos)
+todo: erase(iterator pos)
 progress: push_back
 todo: pop_back
 todo: push_front

@@ -1,5 +1,6 @@
 #include <iostream>
-#include <cstring>
+#include <limits>
+
 namespace s21 {
 template <class T>
 class list {
@@ -25,6 +26,7 @@ class list {
   // Nested class
   class ListIterator {
     friend class list;
+
    public:
     ListIterator();
     ~ListIterator();
@@ -35,8 +37,8 @@ class list {
     void operator++(int);
     void operator--();
     void operator--(int);
-    bool operator==(s21::list<T>::ListIterator iterator) const;
-    bool operator!=(s21::list<T>::ListIterator iterator) const;
+    bool operator==(const s21::list<T>::ListIterator iterator) const;
+    bool operator!=(const s21::list<T>::ListIterator iterator) const;
 
    private:
     value_type value_ = value_type();
@@ -45,7 +47,7 @@ class list {
 
   // Members type
   using iterator = ListIterator;
-  using const_iterator = const_reference;
+  using const_iterator = const T *;
 
   // Constructors
   list();

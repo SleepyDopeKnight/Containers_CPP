@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cstring>
 namespace s21 {
 template <class T>
 class list {
@@ -8,9 +8,44 @@ class list {
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = ListIterator<T>;
-  using const_iterator = ListConstIterator<T>;
   using size_type = size_t;
+
+ private:
+  struct node_ {
+    value_type value_;
+    node_ *next_ = nullptr;
+    node_ *previous_ = nullptr;
+  };
+  node_ *head_ = nullptr;
+  node_ *tail_ = nullptr;
+  node_ *end_node_ = nullptr;
+  size_type size_ = 0;
+
+ public:
+  // Nested class
+  class ListIterator {
+    friend class list;
+   public:
+    ListIterator();
+    ~ListIterator();
+
+    void operator=(node_ &other);
+    T &operator*();
+    void operator++();
+    void operator++(int);
+    void operator--();
+    void operator--(int);
+    bool operator==(s21::list<T>::ListIterator iterator) const;
+    bool operator!=(s21::list<T>::ListIterator iterator) const;
+
+   private:
+    value_type value_ = value_type();
+    node_ *itr_node_ = nullptr;
+  };
+
+  // Members type
+  using iterator = ListIterator;
+  using const_iterator = const_reference;
 
   // Constructors
   list();
@@ -52,15 +87,5 @@ class list {
   void sort();
   // Additional
   void MoveList(list &l);
-
- private:
-  struct node_ {
-    value_type value_;
-    node_ *next_ = nullptr;
-    node_ *previous_ = nullptr;
-  };
-  node_ *head_ = nullptr;
-  node_ *tail_ = nullptr;
-  node_ *end_node_ = nullptr;
 };
-}
+}  // namespace s21

@@ -6,8 +6,8 @@ completed: iterator
 completed: const_iterator
 completed: size_type
 
-todo: ListIterator
-todo: iterator
+completed: ListIterator
+completed: iterator
 todo: const iterator
 
 Functions
@@ -24,8 +24,8 @@ todo: const_reference front();
 todo: const_reference back();
 
 Iterators
-todo: iterator begin
-todo: iterator end
+completed: iterator begin
+completed: iterator end
 
 Capacity
 completed: empty
@@ -36,7 +36,7 @@ Modifiers
 completed: clear
 todo: iterator insert(iterator pos, const_reference value)
 todo: void erase(iterator pos)
-todo: push_back
+progress: push_back
 todo: pop_back
 todo: push_front
 todo: pop_front
@@ -48,8 +48,8 @@ todo: unique
 todo: sort
 
 Iterators Overloading
-todo: *iterator
-todo: ++iterator
-todo: --iterator
-todo: iterator==
-todo: iterator!=
+completed: *iterator
+completed: ++iterator
+completed: --iterator
+completed: iterator==
+completed: iterator!=

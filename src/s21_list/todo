@@ -36,7 +36,7 @@ completed: max size
 Modifiers
 completed: clear
 todo: erase(iterator pos)
-progress: push_back
+completed: push_back
 todo: pop_back
 todo: push_front
 todo: pop_front

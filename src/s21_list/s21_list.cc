@@ -2,8 +2,8 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  // s21::list<int> a({7, 2, 1});
-  s21::list<int> a({1, 2, 3, 0, 5, 3});
+  s21::list<int> a({7, 2, 1});
+  // s21::list<int> a({1, 2, 3, 0, 5, 3});
   // s21::list<int> a(4);
   // auto itr = a.begin();
   // auto itr = a.begin();
@@ -13,35 +13,37 @@ int main() {
 
   auto itr2 = a.end();
   // --itr2;
-  // ++itr2;
+  ++itr2;
   std::cout << *itr2 << std::endl;
-  for (auto itr = a.begin(); itr != a.end(); ++itr) {
-    std::cout << *itr << std::endl;
-  }
+  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
+  // std::cout << *itr << std::endl;
+  // }
   return 0;
 }
 
 // Constructors
 template <class T>
 s21::list<T>::list() {
-  //   *head_ = new node_;
-  //   *tail_ = new node_;
-  //   *end_node_ = new node_;
+  *head_ = new node_;
+  *tail_ = new node_;
+  *end_node_ = new node_;
 
-  //   tail_->next_ = end_node_;
-  //   end_node_->next_ = head_;
-  //   end_node_->previous_ = tail_;
-  //   head_->previous_ = end_node_;
+  tail_->next_ = end_node_;
+  end_node_->next_ = head_;
+  end_node_->previous_ = tail_;
+  head_->previous_ = end_node_;
 }
 
 template <class T>
 s21::list<T>::list(size_type n) {
-  for (int i = 0; i < n; ++i) {
+  end_node_ = new node_;
+  for (size_type i = 0; i < n; ++i) {
     push_back(T());
   }
 }
 template <class T>
 s21::list<T>::list(std::initializer_list<value_type> const &items) {
+  end_node_ = new node_;
   for (auto itr = items.begin(); itr != items.end(); ++itr) {
     push_back(*itr);
   }
@@ -96,7 +98,7 @@ typename s21::list<T>::iterator s21::list<T>::begin() {
 template <class T>
 typename s21::list<T>::iterator s21::list<T>::end() {
   s21::list<T>::iterator iterator;
-  if (end_node_ && head_ && tail_) {
+  if (end_node_) {
     iterator = *end_node_;
   }
   return iterator;
@@ -125,6 +127,8 @@ typename s21::list<T>::size_type s21::list<T>::max_size() {
 // Modifiers
 template <class T>
 void s21::list<T>::clear() {
+  head_->previous_ = nullptr;
+  end_node_->next_ = nullptr;
   while (head_) {
     auto tmp_node = head_;
     head_ = head_->next_;
@@ -140,6 +144,8 @@ template <class T>
 void s21::list<T>::push_back(const_reference value) {
   auto *new_node = new node_;
   new_node->value_ = value;
+  new_node->next_ = end_node_;
+  end_node_->previous_ = new_node;
   if (!head_) {
     head_ = new_node;
     tail_ = head_;
@@ -149,6 +155,7 @@ void s21::list<T>::push_back(const_reference value) {
     tail_ = new_node;
   }
   ++size_;
+  end_node_->next_ = head_;
 }
 
 // template <class T>

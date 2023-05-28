@@ -11,41 +11,7 @@ class list {
   using const_reference = const T &;
   using size_type = size_t;
 
- private:
-  struct node_ {
-    value_type value_;
-    node_ *next_ = nullptr;
-    node_ *previous_ = nullptr;
-  };
-  node_ *head_ = nullptr;
-  node_ *tail_ = nullptr;
-  node_ *end_node_ = nullptr;
-  size_type size_ = 0;
-
- public:
-  // Nested class
-  class ListIterator {
-    friend class list;
-
-   public:
-    ListIterator();
-    ~ListIterator();
-
-    void operator=(node_ &other);
-    T &operator*();
-    void operator++();
-    void operator++(int);
-    void operator--();
-    void operator--(int);
-    bool operator==(const s21::list<T>::ListIterator iterator) const;
-    bool operator!=(const s21::list<T>::ListIterator iterator) const;
-
-   private:
-    value_type value_ = value_type();
-    node_ *itr_node_ = nullptr;
-  };
-
-  // Members type
+  class ListIterator;
   using iterator = ListIterator;
   using const_iterator = const T *;
 
@@ -89,5 +55,38 @@ class list {
   void sort();
   // Additional
   void MoveList(list &l);
+
+ private:
+  struct node_ {
+    value_type value_;
+    node_ *next_;
+    node_ *previous_;
+  };
+  node_ *head_;
+  node_ *tail_;
+  node_ *end_node_;
+  size_type size_;
+};
+
+template <class T>
+class list<T>::ListIterator {
+  friend class list;
+
+ public:
+  ListIterator();
+  ~ListIterator();
+
+  void operator=(node_ &other);
+  T &operator*();
+  void operator++();
+  void operator++(int);
+  void operator--();
+  void operator--(int);
+  bool operator==(const s21::list<T>::ListIterator iterator) const;
+  bool operator!=(const s21::list<T>::ListIterator iterator) const;
+
+ private:
+  value_type value_ = value_type();
+  node_ *itr_node_ = nullptr;
 };
 }  // namespace s21

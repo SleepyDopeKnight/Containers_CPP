@@ -37,7 +37,7 @@ Modifiers
 completed: clear
 todo: erase(iterator pos)
 completed: push_back
-todo: pop_back
+completed: pop_back
 todo: push_front
 todo: pop_front
 todo: swap

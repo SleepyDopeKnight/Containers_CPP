@@ -2,7 +2,7 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  s21::list<int> a({7, 2, 1});
+  s21::list<int> a({7, 2, 1, 8});
   // s21::list<int> a({1, 2, 3, 0, 5, 3});
   // s21::list<int> a(4);
   // auto itr = a.begin();
@@ -10,28 +10,29 @@ int main() {
   // // ++itr;
   // // --itr;
   // std::cout << *itr << std::endl;
-
   auto itr2 = a.end();
-  // --itr2;
-  ++itr2;
+  // a.pop_back();
+  a.pop_back();
+
+  // ++itr2;
+  --itr2;
   std::cout << *itr2 << std::endl;
-  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
-  // std::cout << *itr << std::endl;
-  // }
+  for (auto itr = a.begin(); itr != a.end(); ++itr) {
+    std::cout << *itr << std::endl;
+  }
   return 0;
 }
 
 // Constructors
 template <class T>
-s21::list<T>::list() {
-  *head_ = new node_;
-  *tail_ = new node_;
-  *end_node_ = new node_;
-
-  tail_->next_ = end_node_;
-  end_node_->next_ = head_;
-  end_node_->previous_ = tail_;
-  head_->previous_ = end_node_;
+s21::list<T>::list()
+    : head_(nullptr),
+      head_(nullptr),
+      tail_(nullptr),
+      end_node_(nullptr),
+      size_(0) {
+  node_ *next_ = nullptr;
+  node_ *previous_ = nullptr;
 }
 
 template <class T>
@@ -130,9 +131,9 @@ void s21::list<T>::clear() {
   head_->previous_ = nullptr;
   end_node_->next_ = nullptr;
   while (head_) {
-    auto tmp_node = head_;
+    auto deleted_node = head_;
     head_ = head_->next_;
-    delete tmp_node;
+    delete deleted_node;
   }
   // delete end_node_;
 }
@@ -156,10 +157,23 @@ void s21::list<T>::push_back(const_reference value) {
   }
   ++size_;
   end_node_->next_ = head_;
+  head_->previous_ = end_node_;
 }
 
-// template <class T>
-// void s21::list<T>::pop_back() {}
+template <class T>
+void s21::list<T>::pop_back() {
+  node_ *deleted_node = tail_;
+  if (tail_) {
+    if (head_ != tail_) {
+      tail_ = tail_->previous_;
+      tail_->next_ = end_node_;
+      end_node_->previous_ = tail_;
+    }
+    delete deleted_node;
+    // delete deleted_node;
+    --size_;
+  }
+}
 
 // template <class T>
 // void s21::list<T>::push_front(const_reference value) {}

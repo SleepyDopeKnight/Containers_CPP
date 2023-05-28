@@ -40,9 +40,10 @@ completed: push_back
 completed: pop_back
 completed: push_front
 completed: pop_front
-todo: swap
+completed: swap
 todo: merge
-todo: splice need to reconstruct to const_
+todo: splice
+todo: splice const_
 todo: reverse
 todo: unique
 todo: sort

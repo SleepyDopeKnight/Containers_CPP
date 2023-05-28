@@ -2,8 +2,9 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  // s21::list<int> a({7, 2, 1, 8});
-  s21::list<int> a({1});
+  s21::list<int> a({7, 2, 1, 8});
+  s21::list<int> b({});
+  a.swap(b);
   // s21::list<int> a({});
   // a = nullptr;
   // a.back();
@@ -14,7 +15,7 @@ int main() {
   // std::cout << *itr << std::endl;
   // auto itr2 = a.end();
   // auto itr2 = a.begin();
-  a.pop_front();
+  // a.pop_front();
   // a.pop_front();
 
   // itr2++;
@@ -214,8 +215,13 @@ void s21::list<T>::pop_front() {
   }
 }
 
-// template <class T>
-// void s21::list<T>::swap(list &other) {}
+template <class T>
+void s21::list<T>::swap(list &other) {
+  std::swap(head_, other.head_);
+  std::swap(tail_, other.tail_);
+  std::swap(end_node_, other.end_node_);
+  std::swap(size_, other.size_);
+}
 
 // template <class T>
 // void s21::list<T>::merge(list &other) {}

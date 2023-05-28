@@ -198,7 +198,7 @@ void s21::list<T>::push_front(const_reference value) {
 
 template <class T>
 void s21::list<T>::pop_front() {
-    node_ *deleted_node = head_;
+  node_ *deleted_node = head_;
   if (tail_) {
     if (head_ != tail_) {
       head_ = head_->next_;
@@ -286,6 +286,13 @@ bool s21::list<T>::ListIterator::operator!=(
     const s21::list<T>::ListIterator iterator) const {
   return itr_node_ != iterator.itr_node_;
 }
+
+// ListConstIterator methods
+template <class T>
+s21::list<T>::ListConstIterator::ListConstIterator() = default;
+
+template <class T>
+s21::list<T>::ListConstIterator::~ListConstIterator() = default;
 
 // Additional
 template <class T>

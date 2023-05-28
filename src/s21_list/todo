@@ -8,7 +8,7 @@ completed: size_type
 
 completed: ListIterator
 completed: iterator
-todo: const iterator
+inprogress: const iterator
 
 Functions
 completed: list();

@@ -13,7 +13,8 @@ class list {
 
   class ListIterator;
   using iterator = ListIterator;
-  using const_iterator = const T *;
+  class ListConstIterator;
+  using const_iterator = ListConstIterator;
 
   // Constructors
   list();
@@ -68,6 +69,7 @@ class list {
   size_type size_;
 };
 
+// Nested classes
 template <class T>
 class list<T>::ListIterator {
   friend class list;
@@ -88,5 +90,16 @@ class list<T>::ListIterator {
  private:
   value_type value_ = value_type();
   node_ *itr_node_ = nullptr;
+};
+
+template <class T>
+class list<T>::ListConstIterator {
+  friend class list;
+
+ public:
+  ListConstIterator();
+  ~ListConstIterator();
+
+ private:
 };
 }  // namespace s21

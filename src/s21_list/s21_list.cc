@@ -3,18 +3,19 @@
 int main() {
   // std::cout << "Hola" << std::endl;
   // s21::list<int> a({7, 2, 1, 8});
-  s21::list<int> a({1, 2, 3, 0, 5, 3});
-  // s21::list<int> a({4});
+  s21::list<int> a({});
+  // s21::list<int> a(0);
   // auto itr = a.begin();
   // auto itr = a.begin();
   // // ++itr;
   // // --itr;
   // std::cout << *itr << std::endl;
   // auto itr2 = a.end();
+  auto itr2 = a.begin();
   // a.pop_back();
   // a.pop_front();
 
-  // ++itr2;
+  ++itr2;
   // ++itr2;
   // --itr2;
   // --itr2;
@@ -27,28 +28,25 @@ int main() {
 
 // Constructors
 template <class T>
-s21::list<T>::list()
-    : head_(nullptr),
-      head_(nullptr),
-      tail_(nullptr),
-      end_node_(nullptr),
-      size_(0) {
-  node_ *next_ = nullptr;
-  node_ *previous_ = nullptr;
-}
+s21::list<T>::list() {}
 
 template <class T>
 s21::list<T>::list(size_type n) {
-  end_node_ = new node_;
-  for (size_type i = 0; i < n; ++i) {
-    push_back(T());
+    end_node_ = new node_;
+  if (n > 0) {
+    for (size_type i = 0; i < n; ++i) {
+      push_back(T());
+    }
   }
 }
+
 template <class T>
 s21::list<T>::list(std::initializer_list<value_type> const &items) {
-  end_node_ = new node_;
-  for (auto itr = items.begin(); itr != items.end(); ++itr) {
-    push_back(*itr);
+  if (items.size() > 0) {
+    end_node_ = new node_;
+    for (auto itr = items.begin(); itr != items.end(); ++itr) {
+      push_back(*itr);
+    }
   }
 }
 
@@ -130,8 +128,12 @@ typename s21::list<T>::size_type s21::list<T>::max_size() {
 // Modifiers
 template <class T>
 void s21::list<T>::clear() {
-  head_->previous_ = nullptr;
-  end_node_->next_ = nullptr;
+  if (size_ == 0) {
+    //
+  } else {
+    head_->previous_ = nullptr;
+    end_node_->next_ = nullptr;
+  }
   while (head_) {
     auto deleted_node = head_;
     head_ = head_->next_;
@@ -148,7 +150,7 @@ void s21::list<T>::push_back(const_reference value) {
   new_node->value_ = value;
   new_node->next_ = end_node_;
   end_node_->previous_ = new_node;
-  if (!head_) {
+  if (head_ == nullptr) {
     head_ = new_node;
     tail_ = head_;
   } else {
@@ -165,12 +167,12 @@ template <class T>
 void s21::list<T>::pop_back() {
   node_ *deleted_node = tail_;
   if (tail_) {
-    if (head_ != tail_) {
+    if (head_ == tail_) {
+      head_ = end_node_;
+    } else {
       tail_ = tail_->previous_;
       tail_->next_ = end_node_;
       end_node_->previous_ = tail_;
-    } else {
-      head_ = end_node_;
     }
     delete deleted_node;
     --size_;
@@ -183,7 +185,7 @@ void s21::list<T>::push_front(const_reference value) {
   new_node->value_ = value;
   new_node->previous_ = end_node_;
   end_node_->next_ = new_node;
-  if (!head_) {
+  if (head_ == nullptr) {
     head_ = new_node;
     tail_ = head_;
   } else {
@@ -200,12 +202,12 @@ template <class T>
 void s21::list<T>::pop_front() {
   node_ *deleted_node = head_;
   if (tail_) {
-    if (head_ != tail_) {
+    if (head_ == tail_) {
+      head_ = end_node_;
+    } else {
       head_ = head_->next_;
       head_->previous_ = end_node_;
       end_node_->next_ = head_;
-    } else {
-      head_ = end_node_;
     }
     delete deleted_node;
     --size_;

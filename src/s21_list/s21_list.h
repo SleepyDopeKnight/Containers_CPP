@@ -60,13 +60,13 @@ class list {
  private:
   struct node_ {
     value_type value_;
-    node_ *next_;
-    node_ *previous_;
+    node_ *next_ = nullptr;
+    node_ *previous_ = nullptr;
   };
-  node_ *head_;
-  node_ *tail_;
-  node_ *end_node_;
-  size_type size_;
+  node_ *head_ = nullptr;
+  node_ *tail_ = nullptr;
+  node_ *end_node_ = nullptr;
+  size_type size_ = 0;
 };
 
 // Nested classes

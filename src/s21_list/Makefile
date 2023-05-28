@@ -1,7 +1,13 @@
 .PHONY: all clean rebuild exe
 GXX = g++
-CXXFLAGS= -std=c++17 -Wall -Werror -Wextra
+CXXFLAGS = -std=c++17 -Wall -Werror -Wextra
 OS = $(shell uname -s)
+TEST_FLAGS = -o test.out -lgtest
+
+ifeq ($(OS), Linux)
+	TEST_FLAGS += -o -lpthread
+endif
+
 
 all: exe
 	
@@ -15,19 +21,11 @@ s21_list.a: s21_list.cc s21_list.h
 	ranlib s21_list.a
 
 test: s21_list_tests.cc s21_list.a
-ifeq ($(OS), Darwin)
-	$(CXX) $(CXXFLAGS) s21_list_tests.cc s21_list.a -o test.out -lgtest
-else
-	$(CXX) $(CXXFLAGS) s21_list_tests.cc s21_list.a -o test.out -lgtest -lpthread
-endif
+	$(CXX) $(CXXFLAGS) s21_list_tests.cc s21_list.a $(TEST_FLAGS)
 	./test.out
 
 gcov_report:
-ifeq ($(OS), Darwin)
-	$(CXX) $(CXXFLAGS) -fprofile-arcs -ftest-coverage s21_list_tests.cc s21_list.cc -o test.out -lgtest
-else
-	$(CXX) $(CXXFLAGS) -fprofile-arcs -ftest-coverage s21_list_tests.cc s21_list.cc -o test.out -lgtest -lpthread
-endif
+	$(CXX) $(CXXFLAGS) -fprofile-arcs -ftest-coverage s21_list_tests.cc s21_list.cc $(TEST_FLAGS)
 	./test.out
 	lcov -t "test" -o test.info --no-external -c -d .
 	genhtml -o report test.info

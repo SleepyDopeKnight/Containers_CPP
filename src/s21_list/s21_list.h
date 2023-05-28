@@ -81,9 +81,9 @@ class list<T>::ListIterator {
   void operator=(node_ &other);
   T &operator*();
   void operator++();
-  void operator++(int);
+  void operator++(T);
   void operator--();
-  void operator--(int);
+  void operator--(T);
   bool operator==(const s21::list<T>::ListIterator iterator) const;
   bool operator!=(const s21::list<T>::ListIterator iterator) const;
 
@@ -101,5 +101,7 @@ class list<T>::ListConstIterator {
   ~ListConstIterator();
 
  private:
+  value_type value_ = value_type();
+  node_ *itr_node_ = nullptr;
 };
 }  // namespace s21

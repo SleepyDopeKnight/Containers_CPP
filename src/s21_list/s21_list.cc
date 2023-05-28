@@ -32,8 +32,8 @@ s21::list<T>::list() {}
 
 template <class T>
 s21::list<T>::list(size_type n) {
-    end_node_ = new node_;
   if (n > 0) {
+    end_node_ = new node_;
     for (size_type i = 0; i < n; ++i) {
       push_back(T());
     }

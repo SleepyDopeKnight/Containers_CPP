@@ -2,12 +2,11 @@
 #include <list>
 
 int main() {
-  std::list<int> a({1, 2, 3, 4, 5, 3});
+  std::list<int> a({2});
   auto itr = a.end();
-  *itr;
-  std::cout << *itr << " ";
-  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
-    // std::cout << *itr << " ";
-  // }
+  std::cout << *itr << std::endl;
+  for (auto itr = a.begin(); itr != a.end(); ++itr) {
+    std::cout << *itr << std::endl;
+  }
 	return 0;
 }

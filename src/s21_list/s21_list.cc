@@ -2,21 +2,23 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  s21::list<int> a({7, 2, 1, 8});
-  // s21::list<int> a({1, 2, 3, 0, 5, 3});
-  // s21::list<int> a(4);
+  // s21::list<int> a({7, 2, 1, 8});
+  s21::list<int> a({1, 2, 3, 0, 5, 3});
+  // s21::list<int> a({4});
   // auto itr = a.begin();
   // auto itr = a.begin();
   // // ++itr;
   // // --itr;
   // std::cout << *itr << std::endl;
-  auto itr2 = a.end();
+  // auto itr2 = a.end();
   // a.pop_back();
-  a.pop_back();
+  // a.pop_front();
 
   // ++itr2;
-  --itr2;
-  std::cout << *itr2 << std::endl;
+  // ++itr2;
+  // --itr2;
+  // --itr2;
+  // std::cout << *itr2 << std::endl;
   for (auto itr = a.begin(); itr != a.end(); ++itr) {
     std::cout << *itr << std::endl;
   }
@@ -135,7 +137,6 @@ void s21::list<T>::clear() {
     head_ = head_->next_;
     delete deleted_node;
   }
-  // delete end_node_;
 }
 
 // template <class T>
@@ -168,18 +169,48 @@ void s21::list<T>::pop_back() {
       tail_ = tail_->previous_;
       tail_->next_ = end_node_;
       end_node_->previous_ = tail_;
+    } else {
+      head_ = end_node_;
     }
     delete deleted_node;
-    // delete deleted_node;
     --size_;
   }
 }
 
-// template <class T>
-// void s21::list<T>::push_front(const_reference value) {}
+template <class T>
+void s21::list<T>::push_front(const_reference value) {
+  auto *new_node = new node_;
+  new_node->value_ = value;
+  new_node->previous_ = end_node_;
+  end_node_->next_ = new_node;
+  if (!head_) {
+    head_ = new_node;
+    tail_ = head_;
+  } else {
+    new_node->next_ = head_;
+    head_->previous_ = new_node;
+    head_ = new_node;
+  }
+  ++size_;
+  end_node_->previous_ = tail_;
+  tail_->next_ = end_node_;
+}
 
-// template <class T>
-// void s21::list<T>::pop_front() {}
+template <class T>
+void s21::list<T>::pop_front() {
+    node_ *deleted_node = head_;
+  if (tail_) {
+    if (head_ != tail_) {
+      head_ = head_->next_;
+      head_->previous_ = end_node_;
+      end_node_->next_ = head_;
+    } else {
+      head_ = end_node_;
+    }
+    delete deleted_node;
+    --size_;
+  }
+}
 
 // template <class T>
 // void s21::list<T>::swap(list &other) {}

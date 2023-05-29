@@ -33,7 +33,9 @@ class list {
 
   // Iterators
   iterator begin();
+  const_iterator begin() const;
   iterator end();
+  const_iterator end() const;
   iterator insert(iterator pos, const_reference value);
 
   // Capacity
@@ -51,8 +53,8 @@ class list {
   void swap(list &other);
   void merge(list &other);
   void splice(const_iterator pos, list &other);
-  void splice();
   void unique();
+  void reverse();
   void sort();
   // Additional
   void MoveList(list &l);
@@ -84,8 +86,8 @@ class list<T>::ListIterator {
   void operator++(T);
   void operator--();
   void operator--(T);
-  bool operator==(const s21::list<T>::ListIterator iterator) const;
-  bool operator!=(const s21::list<T>::ListIterator iterator) const;
+  bool operator==(s21::list<T>::ListIterator iterator);
+  bool operator!=(s21::list<T>::ListIterator iterator);
 
  private:
   value_type value_ = value_type();
@@ -100,8 +102,17 @@ class list<T>::ListConstIterator {
   ListConstIterator();
   ~ListConstIterator();
 
+  void operator=(const node_ &other);
+  T &operator*() const;
+  void operator++();
+  void operator++(const T);
+  void operator--();
+  void operator--(const T);
+  bool operator==(const s21::list<T>::ListConstIterator iterator);
+  bool operator!=(const s21::list<T>::ListConstIterator iterator);
+
  private:
   value_type value_ = value_type();
-  node_ *itr_node_ = nullptr;
+  const node_ *itr_node_ = nullptr;
 };
 }  // namespace s21

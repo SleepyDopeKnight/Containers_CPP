@@ -2,29 +2,33 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  s21::list<int> a({7, 2, 1, 8});
-  s21::list<int> b({});
-  a.swap(b);
+  const s21::list<int> a({7, 2, 1, 8, 11, -2});
+  // a.reverse();
+  // s21::list<int> b({1});
   // s21::list<int> a({});
   // a = nullptr;
   // a.back();
-  // auto itr = a.begin();
+  // const auto itr = a.begin();
   // auto itr = a.begin();
   // --itr;
   // // --itr;
   // std::cout << *itr << std::endl;
-  // auto itr2 = a.end();
-  // auto itr2 = a.begin();
+  // const auto itr2 = a.begin();
+  s21::list<int>::const_iterator itr = a.begin();
+  s21::list<int>::const_iterator itr2 = a.begin();
+  // auto itr = a.begin();
   // a.pop_front();
   // a.pop_front();
 
-  // itr2++;
-  // ++itr2;
+  // itr--;
+  // --itr;
   // --itr2;
   // --itr2;
-  // std::cout << *itr2 << std::endl;
+  // std::cout << *itr << std::endl;
+  // if (itr == itr2) {
   for (auto itr = a.begin(); itr != a.end(); ++itr) {
     std::cout << *itr << std::endl;
+    // }
   }
   return 0;
 }
@@ -98,8 +102,27 @@ typename s21::list<T>::iterator s21::list<T>::begin() {
 }
 
 template <class T>
+typename s21::list<T>::const_iterator s21::list<T>::begin() const {
+  s21::list<T>::const_iterator iterator;
+  if (head_) {
+    iterator = *head_;
+  }
+  return iterator;
+}
+
+
+template <class T>
 typename s21::list<T>::iterator s21::list<T>::end() {
   s21::list<T>::iterator iterator;
+  if (end_node_) {
+    iterator = *end_node_;
+  }
+  return iterator;
+}
+
+template <class T>
+typename s21::list<T>::const_iterator s21::list<T>::end() const {
+  s21::list<T>::const_iterator iterator;
   if (end_node_) {
     iterator = *end_node_;
   }
@@ -230,10 +253,20 @@ void s21::list<T>::swap(list &other) {
 // void s21::list<T>::splice(const_iterator pos, list &other) {}
 
 // template <class T>
-// void s21::list<T>::splice() {}
-
-// template <class T>
 // void s21::list<T>::unique() {}
+
+template <class T>
+void s21::list<T>::reverse() {
+  if (size_ > 1) {
+    node_ *current = head_;
+    while (current != end_node_) {
+      node_ *next = current->next_;
+      std::swap(current->next_, current->previous_);
+      current = next;
+    }
+    std::swap(head_, tail_);
+  }
+}
 
 // template <class T>
 // void s21::list<T>::sort() {}
@@ -266,7 +299,7 @@ void s21::list<T>::ListIterator::operator++() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator++(T) {
+void s21::list<T>::ListIterator::operator++(const T) {
   s21::list<T>::iterator iterator;
   iterator = *this;
   ++(*this);
@@ -281,7 +314,7 @@ void s21::list<T>::ListIterator::operator--() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator--(T) {
+void s21::list<T>::ListIterator::operator--(const T) {
   s21::list<T>::iterator iterator;
   iterator = *this;
   --(*this);
@@ -289,13 +322,13 @@ void s21::list<T>::ListIterator::operator--(T) {
 
 template <class T>
 bool s21::list<T>::ListIterator::operator==(
-    const s21::list<T>::ListIterator iterator) const {
+    const s21::list<T>::ListIterator iterator) {
   return itr_node_ == iterator.itr_node_;
 }
 
 template <class T>
 bool s21::list<T>::ListIterator::operator!=(
-    const s21::list<T>::ListIterator iterator) const {
+    const s21::list<T>::ListIterator iterator) {
   return itr_node_ != iterator.itr_node_;
 }
 
@@ -305,6 +338,61 @@ s21::list<T>::ListConstIterator::ListConstIterator() = default;
 
 template <class T>
 s21::list<T>::ListConstIterator::~ListConstIterator() = default;
+
+template <class T>
+void s21::list<T>::ListConstIterator::operator=(const node_ &node) {
+  itr_node_ = &node;
+  value_ = node.value_;
+  }
+
+template <class T>
+typename s21::list<T>::value_type &s21::list<T>::ListConstIterator::operator*()
+    const {
+  T *value = const_cast<T *>(&value_);
+  return *value;
+}
+
+template <class T>
+void s21::list<T>::ListConstIterator::operator++() {
+  if (itr_node_ && itr_node_->next_) {
+    itr_node_ = itr_node_->next_;
+    value_ = itr_node_->value_;
+  }
+}
+
+template <class T>
+void s21::list<T>::ListConstIterator::operator++(T) {
+  s21::list<T>::const_iterator iterator;
+  iterator = *this;
+  ++(*this);
+}
+
+template <class T>
+void s21::list<T>::ListConstIterator::operator--() {
+  if (itr_node_ && itr_node_->previous_) {
+    itr_node_ = itr_node_->previous_;
+    value_ = itr_node_->value_;
+  }
+}
+
+template <class T>
+void s21::list<T>::ListConstIterator::operator--(T) {
+  s21::list<T>::const_iterator iterator;
+  iterator = *this;
+  --(*this);
+}
+
+template <class T>
+bool s21::list<T>::ListConstIterator::operator==(
+    const s21::list<T>::ListConstIterator iterator) {
+  return itr_node_ == iterator.itr_node_;
+}
+
+template <class T>
+bool s21::list<T>::ListConstIterator::operator!=(
+    const s21::list<T>::ListConstIterator iterator) {
+  return itr_node_ != iterator.itr_node_;
+}
 
 // Additional
 template <class T>

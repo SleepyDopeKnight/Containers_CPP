@@ -9,11 +9,11 @@ int main() {
   // a = nullptr;
   a.merge(b);
   // const auto itr = a.begin();
-  auto itr = a.end();
+  // auto itr = a.end();
   // ++itr;
   // --itr;
   // std::cout << *itr << std::endl;
-  // auto itr2 = a.begin();
+  // auto itr = a.size();
   // s21::list<int>::const_iterator itr = a.begin();
   // s21::list<int>::const_iterator itr2 = a.begin();
   // auto itr = a.begin();
@@ -24,9 +24,9 @@ int main() {
   // --itr;
   // --itr2;
   // --itr2;
-  std::cout << *itr << std::endl;
+  // std::cout << itr << std::endl;
   // if (itr == itr2) {
-  for (auto itr = a.begin(); itr != a.end(); ++itr) {
+  for (auto itr = b.begin(); itr != b.end(); ++itr) {
     std::cout << *itr << std::endl;
   }
   // }
@@ -158,6 +158,8 @@ void s21::list<T>::clear() {
     head_ = head_->next_;
     delete deleted_node;
   }
+  size_ = 0;
+  end_node_ = nullptr;
 }
 
 // template <class T>
@@ -252,8 +254,8 @@ void s21::list<T>::merge(list &other) {
     if (size_ == 0) {
       MoveList(other);
     } else {
-      for (auto itr2 = other.begin(); itr2 != other.end(); ++itr2) {
-        push_back(*itr2);
+      for (iterator itr = other.begin(); itr != other.end(); ++itr) {
+        push_back(*itr);
       }
       other.clear();
     }

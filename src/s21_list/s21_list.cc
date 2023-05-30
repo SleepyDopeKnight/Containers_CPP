@@ -5,15 +5,16 @@ int main() {
   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
   // a.reverse();
   s21::list<int> a({9});
-  s21::list<int> b({1, 2, 3, 5});
+  // s21::list<int> a({1, 2, 3, 5});
   // a = nullptr;
-  a.merge(b);
   // const auto itr = a.begin();
   // auto itr = a.end();
   // ++itr;
   // --itr;
   // std::cout << *itr << std::endl;
-  // auto itr = a.size();
+  auto itr = a.end();
+  --itr;
+  a.erase(itr);
   // s21::list<int>::const_iterator itr = a.begin();
   // s21::list<int>::const_iterator itr2 = a.begin();
   // auto itr = a.begin();
@@ -22,11 +23,11 @@ int main() {
 
   // itr--;
   // --itr;
+  // ++itr;
   // --itr2;
-  // --itr2;
-  // std::cout << itr << std::endl;
+  // std::cout << *itr << std::endl;
   // if (itr == itr2) {
-  for (auto itr = b.begin(); itr != b.end(); ++itr) {
+  for (auto itr = a.begin(); itr != a.end(); ++itr) {
     std::cout << *itr << std::endl;
   }
   // }
@@ -167,8 +168,32 @@ void s21::list<T>::clear() {
 //                                            const_reference value) {
 // }
 
-// template <class T>
-// void s21::list<T>::erase(iterator pos) {}
+template <class T>
+void s21::list<T>::erase(iterator pos) {
+  node_ *current_node = pos.itr_node_;
+  if (size_ != 0 && current_node != end_node_) {
+    node_ *next_node = current_node->next_;
+    node_ *previous_node = current_node->previous_;
+    if (next_node) {
+      next_node->previous_ = previous_node;
+    } else {
+      tail_ = previous_node;
+    }
+    if (previous_node) {
+      previous_node->next_ = next_node;
+    } else {
+      head_ = next_node;
+    }
+    if (current_node == head_) {
+      head_ = next_node;
+    }
+    if (current_node == tail_) {
+      tail_ = previous_node;
+    }
+    delete current_node;
+    --size_;
+  }
+}
 
 template <class T>
 void s21::list<T>::push_back(const_reference value) {
@@ -271,11 +296,11 @@ void s21::list<T>::merge(list &other) {
 template <class T>
 void s21::list<T>::reverse() {
   if (size_ > 1) {
-    node_ *current = head_;
-    while (current != end_node_) {
-      node_ *next = current->next_;
-      std::swap(current->next_, current->previous_);
-      current = next;
+    node_ *current_node = head_;
+    while (current_node != end_node_) {
+      node_ *next_node = current_node->next_;
+      std::swap(current_node->next_, current_node->previous_);
+      current_node = next_node;
     }
     std::swap(head_, tail_);
   }

@@ -2,20 +2,20 @@
 
 int main() {
   // std::cout << "Hola" << std::endl;
-  const s21::list<int> a({7, 2, 1, 8, 11, -2});
+  // const s21::list<int> a({7, 2, 1, 8, 11, -2});
   // a.reverse();
-  // s21::list<int> b({1});
-  // s21::list<int> a({});
+  s21::list<int> a({9});
+  s21::list<int> b({1, 2, 3, 5});
   // a = nullptr;
-  // a.back();
+  a.merge(b);
   // const auto itr = a.begin();
-  // auto itr = a.begin();
+  auto itr = a.end();
+  // ++itr;
   // --itr;
-  // // --itr;
   // std::cout << *itr << std::endl;
-  // const auto itr2 = a.begin();
-  s21::list<int>::const_iterator itr = a.begin();
-  s21::list<int>::const_iterator itr2 = a.begin();
+  // auto itr2 = a.begin();
+  // s21::list<int>::const_iterator itr = a.begin();
+  // s21::list<int>::const_iterator itr2 = a.begin();
   // auto itr = a.begin();
   // a.pop_front();
   // a.pop_front();
@@ -24,12 +24,12 @@ int main() {
   // --itr;
   // --itr2;
   // --itr2;
-  // std::cout << *itr << std::endl;
+  std::cout << *itr << std::endl;
   // if (itr == itr2) {
   for (auto itr = a.begin(); itr != a.end(); ++itr) {
     std::cout << *itr << std::endl;
-    // }
   }
+  // }
   return 0;
 }
 
@@ -110,7 +110,6 @@ typename s21::list<T>::const_iterator s21::list<T>::begin() const {
   return iterator;
 }
 
-
 template <class T>
 typename s21::list<T>::iterator s21::list<T>::end() {
   s21::list<T>::iterator iterator;
@@ -128,10 +127,6 @@ typename s21::list<T>::const_iterator s21::list<T>::end() const {
   }
   return iterator;
 }
-
-// template <class T>
-// s21::list<T>::iterator s21::list<T>::insert(iterator pos, const_reference
-// value) {}
 
 // Capacity
 template <class T>
@@ -164,6 +159,11 @@ void s21::list<T>::clear() {
     delete deleted_node;
   }
 }
+
+// template <class T>
+// s21::list<T>::iterator s21::list<T>::insert(iterator pos,
+//                                            const_reference value) {
+// }
 
 // template <class T>
 // void s21::list<T>::erase(iterator pos) {}
@@ -246,8 +246,19 @@ void s21::list<T>::swap(list &other) {
   std::swap(size_, other.size_);
 }
 
-// template <class T>
-// void s21::list<T>::merge(list &other) {}
+template <class T>
+void s21::list<T>::merge(list &other) {
+  if (other.size_ > 0 && &other != this) {
+    if (size_ == 0) {
+      MoveList(other);
+    } else {
+      for (auto itr2 = other.begin(); itr2 != other.end(); ++itr2) {
+        push_back(*itr2);
+      }
+      other.clear();
+    }
+  }
+}
 
 // template <class T>
 // void s21::list<T>::splice(const_iterator pos, list &other) {}
@@ -343,7 +354,7 @@ template <class T>
 void s21::list<T>::ListConstIterator::operator=(const node_ &node) {
   itr_node_ = &node;
   value_ = node.value_;
-  }
+}
 
 template <class T>
 typename s21::list<T>::value_type &s21::list<T>::ListConstIterator::operator*()
@@ -400,7 +411,9 @@ void s21::list<T>::MoveList(list &l) {
   head_ = l.head_;
   tail_ = l.tail_;
   end_node_ = l.end_node_;
+  size_ = l.size_;
   l.head_ = nullptr;
   l.tail_ = nullptr;
   l.end_node_ = nullptr;
+  l.size_ = 0;
 }

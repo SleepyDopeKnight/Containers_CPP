@@ -26,7 +26,6 @@ completed: const_reference back();
 Iterators
 completed: iterator begin
 completed: iterator end
-todo: iterator insert(iterator pos, const_reference value)
 
 Capacity
 completed: empty
@@ -35,16 +34,17 @@ completed: max size
 
 Modifiers
 completed: clear
+todo: iterator insert(iterator pos, const_reference value)
 todo: erase(iterator pos)
 completed: push_back
 completed: pop_back
 completed: push_front
 completed: pop_front
 completed: swap
-todo: merge
+completed: merge
 todo: splice const_
-completed: reverse
 todo: unique
+completed: reverse
 todo: sort
 
 Iterators Overloading

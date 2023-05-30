@@ -36,7 +36,6 @@ class list {
   const_iterator begin() const;
   iterator end();
   const_iterator end() const;
-  iterator insert(iterator pos, const_reference value);
 
   // Capacity
   bool empty();
@@ -45,6 +44,7 @@ class list {
 
   // Modifiers
   void clear();
+  iterator insert(iterator pos, const_reference value);
   void erase(iterator pos);
   void push_back(const_reference value);
   void pop_back();

@@ -13,8 +13,7 @@ class list {
 
   class ListIterator;
   using iterator = ListIterator;
-  class ListConstIterator;
-  using const_iterator = ListConstIterator;
+  using const_iterator = ListIterator const;
 
   // Constructors
   list();
@@ -28,14 +27,12 @@ class list {
   list operator=(list &&l);
 
   // Element access
-  const_reference front();
-  const_reference back();
+  const_reference front() const;
+  const_reference back() const;
 
   // Iterators
-  iterator begin();
-  const_iterator begin() const;
-  iterator end();
-  const_iterator end() const;
+  iterator begin() const;
+  iterator end() const;
 
   // Capacity
   bool empty();
@@ -82,6 +79,7 @@ class list<T>::ListIterator {
 
   void operator=(node_ &other);
   T &operator*();
+  T &operator*() const;
   void operator++();
   void operator++(T);
   void operator--();
@@ -92,27 +90,5 @@ class list<T>::ListIterator {
  private:
   value_type value_ = value_type();
   node_ *itr_node_ = nullptr;
-};
-
-template <class T>
-class list<T>::ListConstIterator {
-  friend class list;
-
- public:
-  ListConstIterator();
-  ~ListConstIterator();
-
-  void operator=(const node_ &other);
-  T &operator*() const;
-  void operator++();
-  void operator++(const T);
-  void operator--();
-  void operator--(const T);
-  bool operator==(const s21::list<T>::ListConstIterator iterator);
-  bool operator!=(const s21::list<T>::ListConstIterator iterator);
-
- private:
-  value_type value_ = value_type();
-  const node_ *itr_node_ = nullptr;
 };
 }  // namespace s21

@@ -2,24 +2,24 @@
 
 int main() {
   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
-  s21::list<int> a({2});
+  const s21::list<int> a({2});
   // s21::list<int> a({1, 2, 3, 5});
   // auto itr = a.begin();
   // a.insert(itr, 10);
   // a.push_back(10);
-  auto itr = a.begin();
-  a.erase(itr);
-  auto itr2 = a.end();
+  // auto itr = a.begin();
+  // a.erase(itr);
+  auto itr2 = a.front();
   // itr--;
-  --itr2;
+  // --itr2;
   // --itr2;
   // --itr2;
   // ++itr;
   // --itr2;
-  std::cout << *itr2 << std::endl;
-  for (auto itr = a.begin(); itr != a.end(); ++itr) {
-    std::cout << *itr << std::endl;
-  }
+  std::cout << itr2 << std::endl;
+  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
+  //   std::cout << *itr << std::endl;
+  // }
   return 0;
 }
 
@@ -70,18 +70,18 @@ s21::list<T> s21::list<T>::operator=(list &&l) {
 
 // Element access
 template <class T>
-typename s21::list<T>::const_reference s21::list<T>::front() {
+typename s21::list<T>::const_reference s21::list<T>::front() const {
   return head_->value_;
 }
 
 template <class T>
-typename s21::list<T>::const_reference s21::list<T>::back() {
+typename s21::list<T>::const_reference s21::list<T>::back() const {
   return tail_->value_;
 }
 
 // Iterators
 template <class T>
-typename s21::list<T>::iterator s21::list<T>::begin() {
+typename s21::list<T>::iterator s21::list<T>::begin() const {
   s21::list<T>::iterator iterator;
   if (head_) {
     iterator = *head_;
@@ -90,26 +90,8 @@ typename s21::list<T>::iterator s21::list<T>::begin() {
 }
 
 template <class T>
-typename s21::list<T>::const_iterator s21::list<T>::begin() const {
-  s21::list<T>::const_iterator iterator;
-  if (head_) {
-    iterator = *head_;
-  }
-  return iterator;
-}
-
-template <class T>
-typename s21::list<T>::iterator s21::list<T>::end() {
+typename s21::list<T>::iterator s21::list<T>::end() const {
   s21::list<T>::iterator iterator;
-  if (end_node_) {
-    iterator = *end_node_;
-  }
-  return iterator;
-}
-
-template <class T>
-typename s21::list<T>::const_iterator s21::list<T>::end() const {
-  s21::list<T>::const_iterator iterator;
   if (end_node_) {
     iterator = *end_node_;
   }
@@ -337,6 +319,13 @@ typename s21::list<T>::value_type &s21::list<T>::ListIterator::operator*() {
 }
 
 template <class T>
+typename s21::list<T>::value_type &s21::list<T>::ListIterator::operator*()
+    const {
+  T *value = const_cast<T *>(&value_);
+  return *value;
+}
+
+template <class T>
 void s21::list<T>::ListIterator::operator++() {
   if (itr_node_ && itr_node_->next_) {
     itr_node_ = itr_node_->next_;
@@ -375,68 +364,6 @@ bool s21::list<T>::ListIterator::operator==(
 template <class T>
 bool s21::list<T>::ListIterator::operator!=(
     const s21::list<T>::ListIterator iterator) {
-  return itr_node_ != iterator.itr_node_;
-}
-
-// ListConstIterator methods
-template <class T>
-s21::list<T>::ListConstIterator::ListConstIterator() = default;
-
-template <class T>
-s21::list<T>::ListConstIterator::~ListConstIterator() = default;
-
-template <class T>
-void s21::list<T>::ListConstIterator::operator=(const node_ &node) {
-  itr_node_ = &node;
-  value_ = node.value_;
-}
-
-template <class T>
-typename s21::list<T>::value_type &s21::list<T>::ListConstIterator::operator*()
-    const {
-  T *value = const_cast<T *>(&value_);
-  return *value;
-}
-
-template <class T>
-void s21::list<T>::ListConstIterator::operator++() {
-  if (itr_node_ && itr_node_->next_) {
-    itr_node_ = itr_node_->next_;
-    value_ = itr_node_->value_;
-  }
-}
-
-template <class T>
-void s21::list<T>::ListConstIterator::operator++(T) {
-  s21::list<T>::const_iterator iterator;
-  iterator = *this;
-  ++(*this);
-}
-
-template <class T>
-void s21::list<T>::ListConstIterator::operator--() {
-  if (itr_node_ && itr_node_->previous_) {
-    itr_node_ = itr_node_->previous_;
-    value_ = itr_node_->value_;
-  }
-}
-
-template <class T>
-void s21::list<T>::ListConstIterator::operator--(T) {
-  s21::list<T>::const_iterator iterator;
-  iterator = *this;
-  --(*this);
-}
-
-template <class T>
-bool s21::list<T>::ListConstIterator::operator==(
-    const s21::list<T>::ListConstIterator iterator) {
-  return itr_node_ == iterator.itr_node_;
-}
-
-template <class T>
-bool s21::list<T>::ListConstIterator::operator!=(
-    const s21::list<T>::ListConstIterator iterator) {
   return itr_node_ != iterator.itr_node_;
 }
 

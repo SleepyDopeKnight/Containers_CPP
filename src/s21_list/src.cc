@@ -2,15 +2,16 @@
 #include <list>
 
 int main() {
-  std::list<int> a({6});
-  // std::list<int> a({});
+  const std::list<int> a({6, 2, 1});
+  // std::list<int> b({5, 4, 8});
   // a.merge(b);
-  auto itr = a.end();
-  a.insert(itr, 10);
+  std::list<int>::const_iterator itr = a.begin();
+  // itr *= 2;
   // ++itr;
-  // std::cout << *itr << std::endl;
-  for (auto itr = a.begin(); itr != a.end(); ++itr) {
-    std::cout << *itr << std::endl;
-  }
+  // a.splice(itr, b);
+  std::cout << *itr << std::endl;
+  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
+    // std::cout << *itr << std::endl;
+  // }
   return 0;
 }

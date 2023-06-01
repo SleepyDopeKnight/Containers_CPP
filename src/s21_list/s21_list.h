@@ -13,7 +13,7 @@ class list {
 
   class ListIterator;
   using iterator = ListIterator;
-  using const_iterator = ListIterator const;
+  using const_iterator = ListIterator;
 
   // Constructors
   list();
@@ -71,7 +71,7 @@ class list {
 // Nested classes
 template <class T>
 class list<T>::ListIterator {
-  friend class list;
+  friend class list<T>;
 
  public:
   ListIterator();

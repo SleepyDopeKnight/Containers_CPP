@@ -8,7 +8,7 @@ completed: size_type
 
 completed: ListIterator
 completed: iterator
-completed: const iterator
+dead: const iterator
 
 Functions
 completed: list();
@@ -42,7 +42,7 @@ completed: push_front
 completed: pop_front
 completed: swap
 completed: merge
-todo: splice const_
+completed: splice const_
 todo: unique
 completed: reverse
 todo: sort

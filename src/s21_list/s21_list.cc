@@ -2,24 +2,24 @@
 
 int main() {
   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
-  const s21::list<int> a({2});
-  // s21::list<int> a({1, 2, 3, 5});
+  s21::list<int> a({});
+  s21::list<int> b({1, 2, 3, 5});
   // auto itr = a.begin();
   // a.insert(itr, 10);
   // a.push_back(10);
-  // auto itr = a.begin();
-  // a.erase(itr);
-  auto itr2 = a.front();
+  auto itr2 = a.end();
+  // s21::list<int>::const_iterator itr2 = a.begin();
+  // ++itr2;
+  a.splice(itr2, b);
+  // a.insert(itr3, 10);
   // itr--;
-  // --itr2;
-  // --itr2;
-  // --itr2;
+
   // ++itr;
   // --itr2;
-  std::cout << itr2 << std::endl;
-  // for (auto itr = a.begin(); itr != a.end(); ++itr) {
-  //   std::cout << *itr << std::endl;
-  // }
+  // std::cout << *itr2 << std::endl;
+  for (auto itr = a.begin(); itr != a.end(); ++itr) {
+    std::cout << *itr << std::endl;
+  }
   return 0;
 }
 
@@ -149,6 +149,8 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
       head_ = new_value;
     } else {
       current_node->previous_->next_ = new_value;
+      new_value->previous_ = current_node->previous_;
+      new_value->next_ = current_node;
       current_node->previous_ = new_value;
     }
   }
@@ -277,8 +279,18 @@ void s21::list<T>::merge(list &other) {
   }
 }
 
-// template <class T>
-// void s21::list<T>::splice(const_iterator pos, list &other) {}
+template <class T>
+void s21::list<T>::splice(const_iterator pos, list &other) {
+  if (other.size_ > 0 && &other != this) {
+    for (auto itr = other.begin(); itr != other.end(); ++itr) {
+      insert(pos, *itr);
+    }
+    other.clear();
+  } else {
+    auto itr = other.begin();
+    push_back(*itr);
+  }
+}
 
 // template <class T>
 // void s21::list<T>::unique() {}
@@ -307,9 +319,9 @@ template <class T>
 s21::list<T>::ListIterator::~ListIterator() = default;
 
 template <class T>
-void s21::list<T>::ListIterator::operator=(node_ &node) {
-  itr_node_ = &node;
-  value_ = node.value_;
+void s21::list<T>::ListIterator::operator=(node_ &other) {
+  itr_node_ = &other;
+  value_ = other.value_;
 }
 
 template <class T>
@@ -334,10 +346,9 @@ void s21::list<T>::ListIterator::operator++() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator++(const T) {
-  s21::list<T>::iterator iterator;
-  iterator = *this;
-  ++(*this);
+void s21::list<T>::ListIterator::operator++(T) {
+  s21::list<T>::iterator iterator = *this;
+  ++iterator;
 }
 
 template <class T>
@@ -349,10 +360,9 @@ void s21::list<T>::ListIterator::operator--() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator--(const T) {
-  s21::list<T>::iterator iterator;
-  iterator = *this;
-  --(*this);
+void s21::list<T>::ListIterator::operator--(T) {
+  s21::list<T>::iterator iterator = *this;
+  --iterator;
 }
 
 template <class T>

@@ -1,28 +1,28 @@
 #include "../s21_containers.h"
 
-int main() {
-  // const s21::list<int> a({7, 2, 1, 8, 11, -2});
-  s21::list<int> a({4, 4, 4, 3, 2, 4, 9});
-  // s21::list<int> b({1, 2, 3, 5});
-  // auto itr = a.begin();
-  // a.insert(itr, 10);
-  // a.push_back(10);
-  a.unique();
-  auto itr2 = a.end();
-  // s21::list<int>::const_iterator itr2 = a.begin();
-  // --itr2;
-  ++itr2;
-  // a.insert(itr3, 10);
-  // itr--;
-  // auto itr = a.end();
-  // ++itr;
-  // --itr;
-  std::cout << *itr2 << std::endl;
-  for (auto itr = a.begin(); itr != a.end(); ++itr) {
-    std::cout << *itr << std::endl;
-  }
-  return 0;
-}
+// int main() {
+//   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
+//   s21::list<int> a({4, 4, 4, 3, 2, 4, 9});
+//   // s21::list<int> b({1, 2, 3, 5});
+//   // auto itr = a.begin();
+//   // a.insert(itr, 10);
+//   // a.push_back(10);
+//   a.unique();
+//   auto itr2 = a.end();
+//   // s21::list<int>::const_iterator itr2 = a.begin();
+//   // --itr2;
+//   ++itr2;
+//   // a.insert(itr3, 10);
+//   // itr--;
+//   // auto itr = a.end();
+//   // ++itr;
+//   // --itr;
+//   std::cout << *itr2 << std::endl;
+//   for (auto itr = a.begin(); itr != a.end(); ++itr) {
+//     std::cout << *itr << std::endl;
+//   }
+//   return 0;
+// }
 
 // Constructors
 template <class T>
@@ -361,7 +361,7 @@ void s21::list<T>::ListIterator::operator++() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator++(T) {
+void s21::list<T>::ListIterator::operator++(int) {
   s21::list<T>::iterator iterator = *this;
   ++iterator;
 }
@@ -375,7 +375,7 @@ void s21::list<T>::ListIterator::operator--() {
 }
 
 template <class T>
-void s21::list<T>::ListIterator::operator--(T) {
+void s21::list<T>::ListIterator::operator--(int) {
   s21::list<T>::iterator iterator = *this;
   --iterator;
 }

@@ -81,9 +81,9 @@ class list<T>::ListIterator {
   T &operator*();
   T &operator*() const;
   void operator++();
-  void operator++(T);
+  void operator++(int);
   void operator--();
-  void operator--(T);
+  void operator--(int);
   bool operator==(s21::list<T>::ListIterator iterator);
   bool operator!=(s21::list<T>::ListIterator iterator);
 

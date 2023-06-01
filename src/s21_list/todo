@@ -43,7 +43,7 @@ completed: pop_front
 completed: swap
 completed: merge
 completed: splice const_
-todo: unique
+completed: unique
 completed: reverse
 todo: sort
 

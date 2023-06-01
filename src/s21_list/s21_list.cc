@@ -2,21 +2,22 @@
 
 int main() {
   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
-  s21::list<int> a({});
-  s21::list<int> b({1, 2, 3, 5});
+  s21::list<int> a({4, 4, 4, 3, 2, 4, 9});
+  // s21::list<int> b({1, 2, 3, 5});
   // auto itr = a.begin();
   // a.insert(itr, 10);
   // a.push_back(10);
+  a.unique();
   auto itr2 = a.end();
   // s21::list<int>::const_iterator itr2 = a.begin();
-  // ++itr2;
-  a.splice(itr2, b);
+  // --itr2;
+  ++itr2;
   // a.insert(itr3, 10);
   // itr--;
-
+  // auto itr = a.end();
   // ++itr;
-  // --itr2;
-  // std::cout << *itr2 << std::endl;
+  // --itr;
+  std::cout << *itr2 << std::endl;
   for (auto itr = a.begin(); itr != a.end(); ++itr) {
     std::cout << *itr << std::endl;
   }
@@ -282,18 +283,32 @@ void s21::list<T>::merge(list &other) {
 template <class T>
 void s21::list<T>::splice(const_iterator pos, list &other) {
   if (other.size_ > 0 && &other != this) {
+    if (size_ == 0) {
+      pos = end();
+    }
     for (auto itr = other.begin(); itr != other.end(); ++itr) {
       insert(pos, *itr);
     }
-    other.clear();
-  } else {
-    auto itr = other.begin();
-    push_back(*itr);
   }
+  other.clear();
 }
 
-// template <class T>
-// void s21::list<T>::unique() {}
+template <class T>
+void s21::list<T>::unique() {
+  if (size_ > 1) {
+    s21::list<T>::iterator current_node = begin();
+    while (current_node != end()) {
+      s21::list<T>::iterator next_node = current_node;
+        current_node = next_node;
+        ++next_node;
+      if (*next_node == *current_node && next_node != end()) {
+        erase(next_node);
+      } else {
+        ++current_node;
+      }
+    }
+  }
+}
 
 template <class T>
 void s21::list<T>::reverse() {

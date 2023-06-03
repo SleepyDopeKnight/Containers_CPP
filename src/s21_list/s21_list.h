@@ -25,6 +25,7 @@ class list {
 
   // Overload operators
   list operator=(list &&l);
+  list operator=(const list &l);
 
   // Element access
   const_reference front() const;
@@ -74,12 +75,8 @@ class list<T>::ListIterator {
   friend class list<T>;
 
  public:
-  ListIterator();
-  ~ListIterator();
-
   void operator=(node_ &other);
   T &operator*();
-  T &operator*() const;
   void operator++();
   void operator++(int);
   void operator--();

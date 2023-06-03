@@ -10,7 +10,10 @@ endif
 
 
 all: exe
-	
+
+src:
+	g++ src.cc -std=c++17 && ./a.out   
+
 exe:
 	$(GXX) $(CXXFLAGS) s21_list.cc
 	@./a.out && rm -rf a.out
@@ -27,8 +30,8 @@ test: s21_list_tests.cc s21_list.a
 gcov_report:
 	$(CXX) $(CXXFLAGS) -fprofile-arcs -ftest-coverage s21_list_tests.cc s21_list.cc $(TEST_FLAGS)
 	./test.out
-	lcov -t "test" -o test.info --no-external -c -d .
-	genhtml -o report test.info
+	lcov -t "test" -o test.info --no-external -c -d . --ignore-errors inconsistent
+	genhtml -o report test.info --ignore-errors inconsistent
 ifeq ($(OS), Darwin)
 	open ./report/index.html
 else

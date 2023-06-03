@@ -1,29 +1,5 @@
 #include "../s21_containers.h"
 
-// int main() {
-//   // const s21::list<int> a({7, 2, 1, 8, 11, -2});
-//   s21::list<int> a({4, 4, 4, 3, 2, 4, 9});
-//   // s21::list<int> b({1, 2, 3, 5});
-//   // auto itr = a.begin();
-//   // a.insert(itr, 10);
-//   // a.push_back(10);
-//   a.unique();
-//   auto itr2 = a.end();
-//   // s21::list<int>::const_iterator itr2 = a.begin();
-//   // --itr2;
-//   ++itr2;
-//   // a.insert(itr3, 10);
-//   // itr--;
-//   // auto itr = a.end();
-//   // ++itr;
-//   // --itr;
-//   std::cout << *itr2 << std::endl;
-//   for (auto itr = a.begin(); itr != a.end(); ++itr) {
-//     std::cout << *itr << std::endl;
-//   }
-//   return 0;
-// }
-
 // Constructors
 template <class T>
 s21::list<T>::list() {}
@@ -46,6 +22,7 @@ s21::list<T>::list(std::initializer_list<value_type> const &items) {
 
 template <class T>
 s21::list<T>::list(const list &l) {
+  end_node_ = new node_;
   for (auto itr = l.begin(); itr != l.end(); ++itr) {
     push_back(*itr);
   }
@@ -66,18 +43,25 @@ template <class T>
 s21::list<T> s21::list<T>::operator=(list &&l) {
   clear();
   MoveList(l);
-  return *this;
 }
 
 // Element access
 template <class T>
 typename s21::list<T>::const_reference s21::list<T>::front() const {
-  return head_->value_;
+  if (size_ > 0) {
+    return head_->value_;
+  } else {
+    return end_node_->value_;
+  }
 }
 
 template <class T>
 typename s21::list<T>::const_reference s21::list<T>::back() const {
-  return tail_->value_;
+  if (size_ > 0) {
+    return tail_->value_;
+  } else {
+    return end_node_->value_;
+  }
 }
 
 // Iterators
@@ -140,6 +124,7 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
   node_ *new_value = new node_{value};
   if (size_ == 0) {
     push_back(value);
+    --size_;
   } else {
     if (current_node == head_) {
       new_value->next_ = head_;
@@ -148,6 +133,13 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
       new_value->next_ = current_node;
       end_node_->next_ = new_value;
       head_ = new_value;
+    } else if (current_node == end_node_) {
+      new_value->previous_ = tail_;
+      tail_->next_ = new_value;
+      new_value->next_ = end_node_;
+      new_value->previous_ = current_node;
+      end_node_->previous_ = new_value;
+      tail_ = new_value;
     } else {
       current_node->previous_->next_ = new_value;
       new_value->previous_ = current_node->previous_;
@@ -156,7 +148,6 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
     }
   }
   pos.itr_node_ = new_value;
-
   ++size_;
   return pos;
 }
@@ -164,24 +155,18 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
 template <class T>
 void s21::list<T>::erase(iterator pos) {
   node_ *current_node = pos.itr_node_;
-  if (size_ != 0 && current_node != end_node_) {
+  if (size_ > 0 && current_node != end_node_) {
     node_ *next_node = current_node->next_;
     node_ *previous_node = current_node->previous_;
-    if (next_node) {
-      next_node->previous_ = previous_node;
-    } else {
-      tail_ = previous_node;
-    }
-    if (previous_node) {
-      previous_node->next_ = next_node;
-    } else {
-      head_ = next_node;
-    }
     if (current_node == head_) {
       head_ = next_node;
+    } else {
+      previous_node->next_ = next_node;
     }
     if (current_node == tail_) {
       tail_ = previous_node;
+    } else {
+      next_node->previous_ = previous_node;
     }
     delete current_node;
     --size_;
@@ -209,10 +194,11 @@ void s21::list<T>::push_back(const_reference value) {
 
 template <class T>
 void s21::list<T>::pop_back() {
-  node_ *deleted_node = tail_;
-  if (tail_) {
+  if (size_ > 0) {
+    node_ *deleted_node = tail_;
     if (head_ == tail_) {
       head_ = end_node_;
+      tail_ = end_node_;
     } else {
       tail_ = tail_->previous_;
       tail_->next_ = end_node_;
@@ -244,10 +230,11 @@ void s21::list<T>::push_front(const_reference value) {
 
 template <class T>
 void s21::list<T>::pop_front() {
-  node_ *deleted_node = head_;
-  if (tail_) {
+  if (size_ > 0) {
+    node_ *deleted_node = head_;
     if (head_ == tail_) {
       head_ = end_node_;
+      tail_ = end_node_;
     } else {
       head_ = head_->next_;
       head_->previous_ = end_node_;
@@ -299,8 +286,8 @@ void s21::list<T>::unique() {
     s21::list<T>::iterator current_node = begin();
     while (current_node != end()) {
       s21::list<T>::iterator next_node = current_node;
-        current_node = next_node;
-        ++next_node;
+      current_node = next_node;
+      ++next_node;
       if (*next_node == *current_node && next_node != end()) {
         erase(next_node);
       } else {
@@ -328,12 +315,6 @@ void s21::list<T>::reverse() {
 
 // LisIterrator methods
 template <class T>
-s21::list<T>::ListIterator::ListIterator() = default;
-
-template <class T>
-s21::list<T>::ListIterator::~ListIterator() = default;
-
-template <class T>
 void s21::list<T>::ListIterator::operator=(node_ &other) {
   itr_node_ = &other;
   value_ = other.value_;
@@ -342,13 +323,6 @@ void s21::list<T>::ListIterator::operator=(node_ &other) {
 template <class T>
 typename s21::list<T>::value_type &s21::list<T>::ListIterator::operator*() {
   T *value = &value_;
-  return *value;
-}
-
-template <class T>
-typename s21::list<T>::value_type &s21::list<T>::ListIterator::operator*()
-    const {
-  T *value = const_cast<T *>(&value_);
   return *value;
 }
 
@@ -362,8 +336,7 @@ void s21::list<T>::ListIterator::operator++() {
 
 template <class T>
 void s21::list<T>::ListIterator::operator++(int) {
-  s21::list<T>::iterator iterator = *this;
-  ++iterator;
+  ++(*this);
 }
 
 template <class T>
@@ -376,8 +349,7 @@ void s21::list<T>::ListIterator::operator--() {
 
 template <class T>
 void s21::list<T>::ListIterator::operator--(int) {
-  s21::list<T>::iterator iterator = *this;
-  --iterator;
+  --(*this);
 }
 
 template <class T>

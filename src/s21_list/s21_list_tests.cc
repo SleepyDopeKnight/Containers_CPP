@@ -118,8 +118,6 @@ TEST(initializer_constructor_suite, struct_true_test) {
   EXPECT_TRUE(s21_a.size() == std_a.size());
 }
 
-// TEST(copy_operator_constructor_suite, int_true_test) {
-
 TEST(copy_constructor_suite, int_true_test) {
   s21::list<int> s21_b(5);
   s21::list<int> s21_a(s21_b);
@@ -579,12 +577,9 @@ TEST(size_suite, cleaned_test) {
 
 TEST(size_suite, erase_empty_test) {
   s21::list<int> list({});
-  // std::list<int> std_list({});
   s21::list<int>::iterator itr = list.end();
-  // std::list<int>::iterator std_itr = std_list.end();
 
   list.erase(itr);
-  // std_list.erase(std_itr);
 
   EXPECT_TRUE(list.back() == list.front());
 }
@@ -936,9 +931,6 @@ TEST(unique_suite, true_test) {
   std_b.unique();
   EXPECT_TRUE(s21_b.size() == std_b.size());
 }
-
-// TEST(reverse_suite, true_test) {
-// }
 
 TEST(reverse_suite, functionality_test) {
   s21::list<int> s21_a{1, 2, 3, 4, 5, 6};

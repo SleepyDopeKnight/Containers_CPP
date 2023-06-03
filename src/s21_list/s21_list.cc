@@ -90,12 +90,12 @@ bool s21::list<T>::empty() {
 }
 
 template <class T>
-typename s21::list<T>::size_type s21::list<T>::size() {
+typename s21::list<T>::size_type s21::list<T>::size() const {
   return size_;
 }
 
 template <class T>
-typename s21::list<T>::size_type s21::list<T>::max_size() {
+typename s21::list<T>::size_type s21::list<T>::max_size() const {
   return std::numeric_limits<size_type>::max();
 }
 

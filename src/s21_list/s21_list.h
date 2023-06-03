@@ -37,8 +37,8 @@ class list {
 
   // Capacity
   bool empty();
-  size_type size();
-  size_type max_size();
+  size_type size() const;
+  size_type max_size() const;
 
   // Modifiers
   void clear();

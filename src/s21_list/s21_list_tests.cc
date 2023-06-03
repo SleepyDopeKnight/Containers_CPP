@@ -125,7 +125,6 @@ TEST(initializer_constructor_suite, struct_true_test) {
 
 // TEST(copy_operator_constructor_suite, int_true_test) {
 
-
 TEST(copy_constructor_suite, int_true_test) {
   s21::list<int> s21_b(5);
   s21::list<int> s21_a(s21_b);
@@ -156,7 +155,7 @@ TEST(copy_constructor_suite, double_true_test) {
 
   EXPECT_TRUE(s21_a.empty() == s21_b.empty());
   EXPECT_TRUE(s21_b.size() == s21_b.size());
-  }
+}
 
 TEST(copy_constructor_suite, float_true_test) {
   s21::list<float> s21_b(5);
@@ -171,7 +170,8 @@ TEST(copy_constructor_suite, float_true_test) {
   EXPECT_TRUE(s21_b.size() == std_b.size());
 
   EXPECT_TRUE(s21_a.empty() == s21_b.empty());
-  EXPECT_TRUE(s21_b.size() == s21_b.size());}
+  EXPECT_TRUE(s21_b.size() == s21_b.size());
+}
 
 TEST(copy_constructor_suite, struct_true_test) {
   struct test_struct {
@@ -928,8 +928,10 @@ TEST(unique_suite, true_test) {
   s21::list<int>::iterator itr_a = s21_a.begin();
   std::list<int>::iterator std_itr_a = std_a.begin();
 
-  for (; itr_a != s21_a.end(); ++itr_a, ++std_itr_a) {
-    EXPECT_TRUE(*itr_a == *std_itr_a);
+  if (*itr_a == *std_itr_a) {
+    for (; itr_a != s21_a.end(); ++itr_a, ++std_itr_a) {
+      EXPECT_TRUE(*itr_a == *std_itr_a);
+    }
   }
 
   s21::list<std::string> s21_b{"foo", "bar", "bar", "baz", "baz"};
@@ -956,10 +958,10 @@ TEST(reverse_suite, functionality_test) {
     }
   }
   std_a.reverse();
-  if (*itr_a == *std_itr_a) {
-    for (; itr_a != s21_a.end(); ++itr_a, ++std_itr_a) {
-      EXPECT_TRUE(*itr_a == *std_itr_a);
-    }
+  s21::list<int>::iterator itr_b = s21_a.begin();
+  std::list<int>::iterator std_itr_b = std_a.begin();
+  for (; itr_b != s21_a.end(); ++itr_b, ++std_itr_b) {
+    EXPECT_TRUE(*itr_b == *std_itr_b);
   }
 }
 
@@ -974,15 +976,6 @@ TEST(reverse_suite, empty_list) {
 
   EXPECT_TRUE(s21_b.empty());
 }
-
-// TEST(max_size_suit, true_test) {
-//   s21::list<int> list;
-//   std::list<int> std_list;
-//   auto s21_size = list.max_size();
-//   auto std_size = std_list.max_size();
-
-//   EXPECT_TRUE(s21_size == std_size);
-// }
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);

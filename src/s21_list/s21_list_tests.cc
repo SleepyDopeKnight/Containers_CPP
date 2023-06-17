@@ -823,34 +823,34 @@ TEST(swap_suite, true_test) {
   EXPECT_TRUE(s21_b.front() == std_b.front());
   EXPECT_TRUE(s21_b.back() == std_b.back());
 }
-//
-// TEST(sort_suite, true_test) {
-//   s21::list<int> list({11, 2, 6, 9, 5});
-//   std::list<int> std_list({11, 2, 6, 9, 5});
-//
-//   list.sort();
-//   std_list.sort();
-//
-//   auto itr = list.begin();
-//   auto std_itr = std_list.begin();
-//   for (; itr != list.end(); ++itr, ++std_itr) {
-//     EXPECT_TRUE(*itr == *std_itr);
-//   }
-// }
-//
-// TEST(sort_suite, empty_test) {
-//   s21::list<int> list;
-//   std::list<int> std_list;
-//
-//   list.sort();
-//   std_list.sort();
-//
-//   auto itr = list.begin();
-//   auto std_itr = std_list.begin();
-//   for (; itr != list.end(); ++itr, ++std_itr) {
-//     EXPECT_TRUE(*itr == *std_itr);
-//   }
-// }
+
+TEST(sort_suite, true_test) {
+  s21::list<int> list({11, 2, 6, 9, 5});
+  std::list<int> std_list({11, 2, 6, 9, 5});
+
+  list.sort();
+  std_list.sort();
+
+  auto itr = list.begin();
+  auto std_itr = std_list.begin();
+  for (; itr != list.end(); ++itr, ++std_itr) {
+    EXPECT_TRUE(*itr == *std_itr);
+  }
+}
+
+TEST(sort_suite, empty_test) {
+  s21::list<int> list;
+  std::list<int> std_list;
+
+  list.sort();
+  std_list.sort();
+
+  auto itr = list.begin();
+  auto std_itr = std_list.begin();
+  for (; itr != list.end(); ++itr, ++std_itr) {
+    EXPECT_TRUE(*itr == *std_itr);
+  }
+}
 
 // block: ITERATORS OVERLOADING
 TEST(overloading_assignment_and_dereference_iterator_suite,

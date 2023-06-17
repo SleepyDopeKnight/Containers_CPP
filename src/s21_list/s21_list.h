@@ -1,5 +1,5 @@
-#include <iostream>
-#include <limits>
+#ifndef SRC_S21_LIST_S21_LIST_H
+#define SRC_S21_LIST_S21_LIST_H
 
 namespace s21 {
 template <class T>
@@ -25,7 +25,6 @@ class list {
 
   // Overload operators
   list operator=(list &&l);
-  list operator=(const list &l);
 
   // Element access
   const_reference front() const;
@@ -54,6 +53,7 @@ class list {
   void unique();
   void reverse();
   void sort();
+
   // Additional
   void MoveList(list &l);
 
@@ -89,3 +89,5 @@ class list<T>::ListIterator {
   node_ *itr_node_ = nullptr;
 };
 }  // namespace s21
+
+#endif  // SRC_S21_LIST_S21_LIST_H

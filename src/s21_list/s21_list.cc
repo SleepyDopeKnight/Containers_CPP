@@ -310,8 +310,42 @@ void s21::list<T>::reverse() {
   }
 }
 
-// template <class T>
-// void s21::list<T>::sort() {}
+template <class T>
+void s21::list<T>::sort() {
+  if (size_ > 1) {
+    bool swapped = true;
+    while (swapped) {
+      swapped = false;
+      node_ *previous_node = nullptr;
+      node_ *current_node = head_;
+
+      while (current_node->next_ != end_node_) {
+        if (current_node->value_ > current_node->next_->value_) {
+          if (previous_node == nullptr) {
+            head_ = current_node->next_;
+          } else {
+            previous_node->next_ = current_node->next_;
+          }
+          node_ *next_node = current_node->next_->next_;
+          current_node->next_->next_ = current_node;
+          current_node->next_ = next_node;
+          if (previous_node == nullptr) {
+            previous_node = head_;
+          } else {
+            previous_node = previous_node->next_;
+          }
+          swapped = true;
+        } else {
+          previous_node = current_node;
+          current_node = current_node->next_;
+        }
+        if (current_node->next_ == end_node_) {
+          tail_ = current_node;
+        }
+      }
+    }
+  }
+}
 
 // LisIterrator methods
 template <class T>

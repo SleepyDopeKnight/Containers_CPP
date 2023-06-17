@@ -1,7 +1,7 @@
 .PHONY: all clean rebuild
 CXX = g++ -std=c++17
-CXXFLAGS = -Wall -Werror -Wextra -g
-PROJECT = s21_list
+CXXFLAGS = -Wall -Werror -Wextra
+PROJECT = s21_stack
 OS = $(shell uname -s)
 TEST_FLAGS = -o test.out -lgtest
 
@@ -9,7 +9,14 @@ ifeq ($(OS), Linux)
 	TEST_FLAGS += -lpthread
 endif
 
-all: $(PROJECT).a test gcov_report check
+all: exe
+# all: $(PROJECT).a test gcov_report check
+
+exe:
+	$(CXX) $(CXXFLAGS) s21_stack.cc && ./a.out && rm -rf a.out
+
+src:
+	$(CXX) $(CXXFLAGS) src.cc && ./a.out && rm -rf a.out
 
 $(PROJECT).a: $(PROJECT).cc $(PROJECT).h
 	$(CXX) $(CXXFLAGS) $(PROJECT).cc -c

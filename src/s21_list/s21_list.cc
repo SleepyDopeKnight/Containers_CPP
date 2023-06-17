@@ -85,7 +85,7 @@ typename s21::list<T>::iterator s21::list<T>::end() const {
 
 // Capacity
 template <class T>
-bool s21::list<T>::empty() {
+bool s21::list<T>::empty() const {
   return !size();
 }
 

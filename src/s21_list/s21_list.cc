@@ -102,7 +102,9 @@ typename s21::list<T>::size_type s21::list<T>::max_size() const {
 // Modifiers
 template <class T>
 void s21::list<T>::clear() {
-  if (size_) {
+  if (size_ == 0) {
+    head_ = nullptr;
+  } else {
     head_->previous_ = nullptr;
     end_node_->next_ = nullptr;
   }

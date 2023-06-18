@@ -1,5 +1,7 @@
-#ifndef SRC_S21_STACK_S21_STACK_H
-#define SRC_S21_STACK_S21_STACK_H
+#ifndef CONTAINERS_CPP_S21_STACK_S21_STACK_H
+#define CONTAINERS_CPP_S21_STACK_S21_STACK_H
+
+#include <iostream>
 
 #include "../s21_list/s21_list.cc"
 
@@ -35,22 +37,7 @@ class stack : public list<T> {
   void push(const_reference value);
   void pop();
   void swap(stack &other);
-
-  // Additional
-  void MoveStack(stack &s);
-  void clear();
-
-  //  private:
-  //   struct node_ {
-  //     value_type value_;
-  //     node_ *next_ = nullptr;
-  //     node_ *previous_ = nullptr;
-  //   };
-  //   node_ *head_ = nullptr;
-  //   node_ *tail_ = nullptr;
-  //   node_ *end_node_ = nullptr;
-  //   size_type size_ = 0;
 };
 }  // namespace s21
 
-#endif  // SRC_S21_STACK_S21_STACK_H
+#endif  // CONTAINERS_CPP_S21_STACK_S21_STACK_H

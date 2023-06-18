@@ -1,13 +1,14 @@
 #include "../s21_containers.h"
 
-int main() {
-  s21::stack<int> a({1, 2, 3});
-  while (!a.empty()) {
-    int temp = a.top();
-    a.pop();
-    std::cout << temp << std::endl;
-  }
-}
+// int main() {
+//   s21::stack<int> a({1, 2, 3});
+//   while (!a.empty()) {
+//     int temp = a.top();
+//     a.pop();
+//     std::cout << temp << std::endl;
+//   }
+//   a.empty();
+// }
 
 // Constructors
 template <class T>
@@ -24,14 +25,19 @@ template <class T>
 s21::stack<T>::stack(const stack &s) : list<T>(s) {}
 
 template <class T>
-s21::stack<T>::stack(stack &&s) : list<T>(s) {}
+s21::stack<T>::stack(stack &&s) {
+  s21::list<T>::MoveList(s);
+}
 
 template <class T>
 s21::stack<T>::~stack() {}
 
 // Overload operators
 template <class T>
-s21::stack<T> s21::stack<T>::operator=(stack &&s) {}
+s21::stack<T> s21::stack<T>::operator=(stack &&s) {
+  *this = list<T>::operator=(s);
+  return *this;
+}
 
 // Capacity
 template <class T>
@@ -64,10 +70,4 @@ void s21::stack<T>::pop() {
 template <class T>
 void s21::stack<T>::swap(stack &other) {
   s21::list<T>::swap(other);
-}
-
-// Additional
-template <class T>
-void s21::stack<T>::MoveStack(stack &s) {
-  s21::list<T>::MoveList(s);
 }

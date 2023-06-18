@@ -102,19 +102,21 @@ typename s21::list<T>::size_type s21::list<T>::max_size() const {
 // Modifiers
 template <class T>
 void s21::list<T>::clear() {
-  if (size_ == 0) {
-    head_ = nullptr;
-  } else {
+  if (size_) {
     head_->previous_ = nullptr;
     end_node_->next_ = nullptr;
   }
-  while (head_) {
-    auto deleted_node = head_;
-    head_ = head_->next_;
-    delete deleted_node;
+  if (head_) {
+    while (head_) {
+      auto deleted_node = head_;
+      head_ = head_->next_;
+      delete deleted_node;
+    }
+    size_ = 0;
+    end_node_ = nullptr;
+  } else {
+    delete end_node_;
   }
-  size_ = 0;
-  end_node_ = nullptr;
 }
 
 template <class T>
@@ -123,8 +125,12 @@ typename s21::list<T>::iterator s21::list<T>::insert(iterator pos,
   node_ *current_node = pos.itr_node_;
   node_ *new_value = new node_{value};
   if (size_ == 0) {
-    push_back(value);
-    --size_;
+    new_value->next_ = end_node_;
+    new_value->previous_ = end_node_;
+    end_node_->next_ = new_value;
+    end_node_->previous_ = new_value;
+    head_ = new_value;
+    tail_ = new_value;
   } else {
     if (current_node == head_) {
       new_value->next_ = head_;
@@ -218,6 +224,7 @@ void s21::list<T>::push_front(const_reference value) {
   if (head_ == nullptr) {
     head_ = new_node;
     tail_ = head_;
+    tail_->next_ = end_node_;
   } else {
     new_node->next_ = head_;
     head_->previous_ = new_node;
@@ -256,14 +263,10 @@ void s21::list<T>::swap(list &other) {
 template <class T>
 void s21::list<T>::merge(list &other) {
   if (other.size_ > 0 && &other != this) {
-    if (size_ == 0) {
-      MoveList(other);
-    } else {
-      for (iterator itr = other.begin(); itr != other.end(); ++itr) {
-        push_back(*itr);
-      }
-      other.clear();
+    for (iterator itr = other.begin(); itr != other.end(); ++itr) {
+      push_back(*itr);
     }
+    other.clear();
   }
 }
 
@@ -276,8 +279,8 @@ void s21::list<T>::splice(const_iterator pos, list &other) {
     for (auto itr = other.begin(); itr != other.end(); ++itr) {
       insert(pos, *itr);
     }
+    other.clear();
   }
-  other.clear();
 }
 
 template <class T>

@@ -1,14 +1,4 @@
-#include "../s21_containers.h"
-
-// int main() {
-//   s21::stack<int> a({1, 2, 3});
-//   while (!a.empty()) {
-//     int temp = a.top();
-//     a.pop();
-//     std::cout << temp << std::endl;
-//   }
-//   a.empty();
-// }
+#include "s21_stack.h"
 
 // Constructors
 template <class T>

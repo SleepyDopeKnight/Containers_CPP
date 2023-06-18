@@ -1,122 +1,73 @@
 #include "../s21_containers.h"
 
 int main() {
-  // std::cout << "jojo" << std::endl;
-  s21::stack<int> a(2);
-  //  while (!a.empty())
-  //   {
-  //       int temp = a.top();
-  //       a.pop();
-  //       std::cout << temp << std::endl;
-  //   }
+  s21::stack<int> a({1, 2, 3});
+  while (!a.empty()) {
+    int temp = a.top();
+    a.pop();
+    std::cout << temp << std::endl;
+  }
 }
 
 // Constructors
 template <class T>
-s21::stack<T>::stack() {}
+s21::stack<T>::stack() : list<T>() {}
 
 template <class T>
-s21::stack<T>::stack(size_type n) {
-  for (size_type i = 0; i < n; ++i) {
-    push(T());
-  }
-}
+s21::stack<T>::stack(size_type n) : list<T>(n) {}
 
 template <class T>
-s21::stack<T>::stack(std::initializer_list<value_type> const &items) {
-  for (auto itr = items.begin(); itr != items.end(); ++itr) {
-    push(*itr);
-  }
-}
+s21::stack<T>::stack(std::initializer_list<value_type> const &items)
+    : list<T>(items) {}
 
 template <class T>
-s21::stack<T>::stack(const stack &s) {
-  for (auto itr = s.begin(); itr != s.end(); ++itr) {
-    push(*itr);
-  }
-}
+s21::stack<T>::stack(const stack &s) : list<T>(s) {}
 
 template <class T>
-s21::stack<T>::stack(stack &&s) {
-  MoveStack(s);
-}
+s21::stack<T>::stack(stack &&s) : list<T>(s) {}
 
 template <class T>
-s21::stack<T>::~stack() {
-  s21::list<T>::clear();
-}
+s21::stack<T>::~stack() {}
 
 // Overload operators
 template <class T>
-s21::stack<T> s21::stack<T>::operator=(stack &&s) {
-  s21::list<T>::clear();
-  MoveStack(s);
-}
+s21::stack<T> s21::stack<T>::operator=(stack &&s) {}
 
 // Capacity
 template <class T>
 bool s21::stack<T>::empty() const {
-  return !size();
+  return s21::list<T>::empty();
 }
 
 template <class T>
 typename s21::stack<T>::size_type s21::stack<T>::size() const {
-  return size_;
+  return s21::list<T>::size();
 }
 
 // Element access
 template <class T>
 typename s21::stack<T>::const_reference s21::stack<T>::top() const {
-  // if (size_ > 0) {
-  //   return head_->value_;
-  // } else {
-  //   return NULL;
-  // }
-  s21::list<T>::front();
+  return s21::list<T>::back();
 }
 
 // Modifiers
 template <class T>
 void s21::stack<T>::push(const_reference value) {
-  // auto *new_node = new node_;
-  // new_node->value_ = value;
-  // new_node->next_ = head_;
-  // head_ = new_node;
-  // ++size_;
   s21::list<T>::push_back(value);
 }
 
 template <class T>
 void s21::stack<T>::pop() {
-  // if (head_) {
-  //   --size_;
-  // }
   s21::list<T>::pop_back();
 }
 
 template <class T>
 void s21::stack<T>::swap(stack &other) {
-  // std::swap(head_, other.head_);
-  // std::swap(size_, other.size_);
   s21::list<T>::swap(other);
 }
 
 // Additional
 template <class T>
 void s21::stack<T>::MoveStack(stack &s) {
-  // head_ = s.head_;
-  // size_ = s.size_;
-  // s.head_ = nullptr;
-  // s.size_ = 0;
   s21::list<T>::MoveList(s);
 }
-
-// template <class T>
-// void s21::stack<T>::clear() {
-//   while (head_) {
-//     auto deleted_node = head_;
-//     head_ = head_->next_;
-//     delete deleted_node;
-//   }
-//   size_ = 0;
-// }

@@ -40,17 +40,16 @@ class stack : public list<T> {
   void MoveStack(stack &s);
   void clear();
 
-
- private:
-  struct node_ {
-    value_type value_;
-    node_ *next_ = nullptr;
-    node_ *previous_ = nullptr;
-  };
-  node_ *head_ = nullptr;
-  node_ *tail_ = nullptr;
-  node_ *end_node_ = nullptr;
-  size_type size_ = 0;
+  //  private:
+  //   struct node_ {
+  //     value_type value_;
+  //     node_ *next_ = nullptr;
+  //     node_ *previous_ = nullptr;
+  //   };
+  //   node_ *head_ = nullptr;
+  //   node_ *tail_ = nullptr;
+  //   node_ *end_node_ = nullptr;
+  //   size_type size_ = 0;
 };
 }  // namespace s21
 

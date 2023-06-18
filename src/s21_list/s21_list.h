@@ -1,6 +1,9 @@
 #ifndef SRC_S21_LIST_S21_LIST_H
 #define SRC_S21_LIST_S21_LIST_H
 
+#include <iostream>
+#include <limits>
+
 namespace s21 {
 template <class T>
 class list {

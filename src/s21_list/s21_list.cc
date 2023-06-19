@@ -291,8 +291,8 @@ template <class T>
 void s21::list<T>::unique() {
   if (size_ > 1) {
     s21::list<T>::iterator current_node = begin();
+    s21::list<T>::iterator next_node = current_node;
     while (current_node != end()) {
-      s21::list<T>::iterator next_node = current_node;
       current_node = next_node;
       ++next_node;
       if (next_node != end() && *next_node == *current_node) {

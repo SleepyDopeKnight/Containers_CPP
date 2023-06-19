@@ -97,13 +97,13 @@ TEST(copy_constructor_suite, int_true_test) {
   std::stack<int> std_b({1, 2, 3, 4, 5});
   std::stack<int> std_a(std_b);
 
-    EXPECT_TRUE(s21_a.empty() == std_a.empty());
-    EXPECT_TRUE(s21_a.size() == std_a.size());
-    EXPECT_TRUE(s21_a.top() == std_a.top());
+  EXPECT_TRUE(s21_a.empty() == std_a.empty());
+  EXPECT_TRUE(s21_a.size() == std_a.size());
+  EXPECT_TRUE(s21_a.top() == std_a.top());
 
-    EXPECT_TRUE(s21_b.empty() == std_b.empty());
-    EXPECT_TRUE(s21_b.size() == std_b.size());
-    EXPECT_TRUE(s21_b.top() == std_b.top());
+  EXPECT_TRUE(s21_b.empty() == std_b.empty());
+  EXPECT_TRUE(s21_b.size() == std_b.size());
+  EXPECT_TRUE(s21_b.top() == std_b.top());
 }
 
 TEST(copy_constructor_suite, double_true_test) {
@@ -427,7 +427,6 @@ TEST(swap_suite, true_test) {
   EXPECT_TRUE(s21_b.size() == std_b.size());
   EXPECT_TRUE(s21_b.top() == std_b.top());
 }
-
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);

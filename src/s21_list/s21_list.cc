@@ -48,19 +48,21 @@ s21::list<T> s21::list<T>::operator=(list &&l) {
 // Element access
 template <class T>
 typename s21::list<T>::const_reference s21::list<T>::front() const {
+  static const T default_value = T();
   if (size_ > 0) {
     return head_->value_;
   } else {
-    return end_node_->value_;
+    return default_value;
   }
 }
 
 template <class T>
 typename s21::list<T>::const_reference s21::list<T>::back() const {
+  static const T default_value = T();
   if (size_ > 0) {
     return tail_->value_;
   } else {
-    return end_node_->value_;
+    return default_value;
   }
 }
 
@@ -293,7 +295,7 @@ void s21::list<T>::unique() {
       s21::list<T>::iterator next_node = current_node;
       current_node = next_node;
       ++next_node;
-      if (*next_node == *current_node && next_node != end()) {
+      if (next_node != end() && *next_node == *current_node) {
         erase(next_node);
       } else {
         ++current_node;

@@ -15,9 +15,7 @@ template <class T>
 s21::stack<T>::stack(const stack &s) : list<T>(s) {}
 
 template <class T>
-s21::stack<T>::stack(stack &&s) {
-  s21::list<T>::MoveList(s);
-}
+s21::stack<T>::stack(stack &&s) : list<T>(std::move(s)) {}
 
 template <class T>
 s21::stack<T>::~stack() {}
@@ -25,7 +23,8 @@ s21::stack<T>::~stack() {}
 // Overload operators
 template <class T>
 s21::stack<T> s21::stack<T>::operator=(stack &&s) {
-  *this = list<T>::operator=(s);
+  s21::list<T>::clear();
+  s21::list<T>::MoveList(s);
   return *this;
 }
 

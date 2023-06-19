@@ -2,7 +2,9 @@
 
 // Constructors
 template <class T>
-s21::list<T>::list() {}
+s21::list<T>::list() {
+  end_node_ = new node_;
+}
 
 template <class T>
 s21::list<T>::list(size_type n) {
@@ -43,6 +45,7 @@ template <class T>
 s21::list<T> s21::list<T>::operator=(list &&l) {
   clear();
   MoveList(l);
+  return *this;
 }
 
 // Element access
@@ -72,6 +75,8 @@ typename s21::list<T>::iterator s21::list<T>::begin() const {
   s21::list<T>::iterator iterator;
   if (head_) {
     iterator = *head_;
+  } else {
+    iterator = *end_node_;
   }
   return iterator;
 }
@@ -120,6 +125,7 @@ void s21::list<T>::clear() {
     end_node_ = nullptr;
   } else {
     delete end_node_;
+    end_node_ = nullptr;
   }
 }
 

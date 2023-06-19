@@ -272,9 +272,11 @@ TEST(move_operator_constructor_suite, int_true_test) {
 
 TEST(move_operator_constructor_suite, double_true_test) {
   s21::list<double> s21_a({1, 2, 3});
-  s21::list<double> s21_b = s21_a;
+  s21::list<double> s21_b({});
+  s21_b = std::move(s21_a);
   std::list<double> std_a({1, 2, 3});
-  std::list<double> std_b = std_a;
+  std::list<double> std_b({});
+  std_b = std::move(std_a);
 
   EXPECT_TRUE(s21_a.empty() == std_a.empty());
   EXPECT_TRUE(s21_a.size() == std_a.size());
@@ -962,6 +964,15 @@ TEST(reverse_suite, empty_list) {
   s21_b.reverse();
 
   EXPECT_TRUE(s21_b.empty());
+}
+
+TEST(list_iterator_siute, equality_operator_true_test) {
+  s21::list<int> test_list = {1, 2, 3};
+  s21::list<int>::iterator itr_ = test_list.begin();
+  s21::list<int>::iterator itr2_ = test_list.begin();
+
+  bool result = itr_ == itr2_;
+  ASSERT_TRUE(result);
 }
 
 int main(int argc, char** argv) {

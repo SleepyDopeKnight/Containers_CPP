@@ -15,9 +15,7 @@ template <class T>
 s21::queue<T>::queue(const queue &q) : list<T>(q) {}
 
 template <class T>
-s21::queue<T>::queue(queue &&q) {
-  s21::list<T>::MoveList(q);
-}
+s21::queue<T>::queue(queue &&q) : list<T>(std::move(q)) {}
 
 template <class T>
 s21::queue<T>::~queue() {}
@@ -25,7 +23,8 @@ s21::queue<T>::~queue() {}
 // Overload operators
 template <class T>
 s21::queue<T> s21::queue<T>::operator=(queue &&q) {
-  *this = list<T>::operator=(q);
+  s21::list<T>::clear();
+  s21::list<T>::MoveList(q);
   return *this;
 }
 

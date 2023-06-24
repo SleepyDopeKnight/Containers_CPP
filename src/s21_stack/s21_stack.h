@@ -26,17 +26,12 @@ class stack : public list<T> {
   // Overload operators
   stack operator=(stack &&s);
 
-  // Capacity
-  bool empty() const;
-  size_type size() const;
-
   // Element access
   const_reference top() const;
 
   // Modifiers
   void push(const_reference value);
   void pop();
-  void swap(stack &other);
 };
 }  // namespace s21
 

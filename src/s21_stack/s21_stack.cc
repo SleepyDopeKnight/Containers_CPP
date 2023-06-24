@@ -28,17 +28,6 @@ s21::stack<T> s21::stack<T>::operator=(stack &&s) {
   return *this;
 }
 
-// Capacity
-template <class T>
-bool s21::stack<T>::empty() const {
-  return s21::list<T>::empty();
-}
-
-template <class T>
-typename s21::stack<T>::size_type s21::stack<T>::size() const {
-  return s21::list<T>::size();
-}
-
 // Element access
 template <class T>
 typename s21::stack<T>::const_reference s21::stack<T>::top() const {
@@ -54,9 +43,4 @@ void s21::stack<T>::push(const_reference value) {
 template <class T>
 void s21::stack<T>::pop() {
   s21::list<T>::pop_back();
-}
-
-template <class T>
-void s21::stack<T>::swap(stack &other) {
-  s21::list<T>::swap(other);
 }

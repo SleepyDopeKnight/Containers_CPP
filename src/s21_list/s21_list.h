@@ -72,7 +72,7 @@ class list {
   size_type size_ = 0;
 };
 
-// Nested classes
+// Nested class
 template <class T>
 class list<T>::ListIterator {
   friend class list<T>;

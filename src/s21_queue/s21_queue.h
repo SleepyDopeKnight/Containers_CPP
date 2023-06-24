@@ -26,18 +26,9 @@ class queue : public list<T> {
   // Overload operators
   queue operator=(queue &&q);
 
-  // Capacity
-  bool empty() const;
-  size_type size() const;
-
-  // Element access
-  const_reference front() const;
-  const_reference back() const;
-
   // Modifiers
   void push(const_reference value);
   void pop();
-  void swap(queue &other);
 };
 }  // namespace s21
 

@@ -1,7 +1,7 @@
 #include <list>
 
 #include "gtest/gtest.h"
-#include "s21_list.cc"
+#include "s21_list.hpp"
 
 // block: CONSTRUCTORS
 TEST(default_constructor_suite, int_true_test) {

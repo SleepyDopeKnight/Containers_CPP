@@ -1,7 +1,7 @@
 #include <stack>
 
 #include "gtest/gtest.h"
-#include "s21_stack.cc"
+#include "s21_stack.hpp"
 
 // BLOCK: FUNCTIONS
 TEST(copy_constructor_suite, true_test) {

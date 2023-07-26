@@ -1,8 +1,7 @@
-#include "s21_vector.cc"
-
 #include <vector>
 
 #include "gtest/gtest.h"
+#include "s21_vector.hpp"
 
 // BLOCK: CONSTRUCTORS (MEMBER FUNCTIONS)
 

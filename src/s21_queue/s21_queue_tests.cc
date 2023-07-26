@@ -1,7 +1,7 @@
 #include <queue>
 
 #include "gtest/gtest.h"
-#include "s21_queue.cc"
+#include "s21_queue.hpp"
 
 // BLOCK: FUNCTIONS
 TEST(default_constructor_suite, int_true_test) {
